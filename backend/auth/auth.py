@@ -3,7 +3,7 @@
 from flask import Blueprint, request, jsonify
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_user, logout_user, login_required, current_user
-from .. import db_person, db_patient, db_carer
+from .. import db_person
 from ..models.user import User
 from bson.objectid import ObjectId
 
