@@ -7,11 +7,22 @@
 }
 
 .clean-scroll::-webkit-scrollbar {
-  width: 0px;
+  width: 6px;
+  border-radius: 20px;
   background: transparent;
 }
 
 .clean-scroll::-webkit-scrollbar-thumb {
-  width: 0px;
+  width: 6px;
   background: transparent;
+}
+
+.show-scroll:hover::-webkit-scrollbar {
+  width: 6px;
+  background: #C2E9D8;
+}
+
+.show-scroll:hover::-webkit-scrollbar-thumb {
+  background: #52f07f8a;
+  border-radius: 30px;
 }

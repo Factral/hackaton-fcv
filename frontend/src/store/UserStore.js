@@ -9,8 +9,16 @@ const userInitial = {
   birthdate: null
 }
 
+const userRebember = () => {
+  const user = localStorage.getItem('user')
+  if (user) {
+    return JSON.parse(user)
+  }
+  return userInitial
+}
+
 const UserStore = create((set) => ({
-  user: userInitial,
+  user: userRebember(),
 
   setUser: (newUser) => set({ user: newUser }),
   resetUser: () => set({ user: userInitial })

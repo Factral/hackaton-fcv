@@ -30,6 +30,7 @@ export default function useUser () {
   const logIn = async (data) => {
     setLoading(true)
     const response = await fetchLogin(data)
+    const { rebember } = data
     const message = response.message
     if (response.error) {
       setLoading(false)
@@ -45,6 +46,8 @@ export default function useUser () {
       errorAlert(newMessage)
       return
     }
+
+    if (rebember) localStorage.setItem('user', JSON.stringify(newUser))
 
     setUser(newUser)
     setLoading(false)
