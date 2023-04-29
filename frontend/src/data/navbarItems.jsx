@@ -1,21 +1,24 @@
-import { Chat, CheckList, DrugList, Progres } from '../Icons'
+import { Chat, CheckList, Progres, SearchDrugs } from '../components/Icons'
 
 export const navbarItems = [
   {
-    icon: <CheckList/>,
-    label: 'Tú formula'
+    icon: <CheckList />,
+    label: 'Formula',
+    path: '/'
   },
   {
-    icon: <DrugList/>,
-    label: 'Medicamentos'
+    icon: <SearchDrugs />,
+    label: 'Medicamentos',
+    path: '/medicamentos'
   },
   {
-    icon: <Chat/>,
-    label: 'Chat'
+    icon: <Chat />,
+    label: 'Chat',
+    path: '/chat'
   },
   {
-    icon: <Progres/>,
-    label: 'Progreso'
+    icon: <Progres />,
+    label: 'Progreso',
+    path: '/progreso'
   }
 ]
-
