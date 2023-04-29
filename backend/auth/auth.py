@@ -21,13 +21,13 @@ def login_post():
     user = db_person.find_one({'email': email})
 
     if not user or not User.validate_login(user['password'], password):
-        return jsonify({'message': 'Por favor revisa tus credenciales'}), 400
+        return jsonify({'message': 'Por favor revisa tus credenciales', "error" : True}), 400
     
     user_obj = User(str(user["_id"]), user["email"], user["name"], user['phone'],user["birthdate"],user["role"],user["gender"], user["document"])
 
     login_user(user_obj, remember=remember)
 
-    return jsonify({'message': 'Logged in'}), 200
+    return jsonify({'message': 'Has iniciado sesión'}), 200
 
 # signup
 
@@ -42,16 +42,12 @@ def signup_post():
     role =  request.json['role']
     gender = request.json['gender']
     document = request.json['document']
-    
-    
-    
-
     # check if user already exists
     user = db_person.find_one({'email': email})
     
 
     if user: 
-        return jsonify({'message': 'User already exists' , 'Error': 400}), 400
+        return jsonify({'message': 'User already exists' , 'error': True}), 400
     
 
     # regiter user in mongodb
@@ -66,41 +62,7 @@ def signup_post():
         'document': document
     }
 
-    person = db_person.insert_one(new_user)
-    
-    if role == 'patient':
-        db_patient.insert_one({
-            'id_person': ObjectId(person.inserted_id),
-        })
-    elif role == 'carer':
-        patients = []
-        #agregar excepciones
-        for patient in request.json['id_patients']:
-            user = db_person.find_one({'document': patient})
-            patients.append(user['_id'])
-            
-        db_carer.insert_one({
-            'id_person':  ObjectId(person.inserted_id),
-            'id_patients': patients,
-        })
-    else:
-        db_patient.insert_one({
-            'id_person': ObjectId(person.inserted_id),
-        })
-        patients = []
-        for patient in request.json['id_patients']:
-            user = db_person.find_one({'document': patient})
-            patients.append(user['_id'])
-            
-        db_carer.insert_one({
-            'id_person':  ObjectId(person.inserted_id),
-            'id_patients': patients,
-        })
-
-        
-        
-    
-            
+    person = db_person.insert_one(new_user)    
 
     return jsonify({'message': 'El usuario ha sido creado'}), 201
 

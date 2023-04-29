@@ -7,11 +7,10 @@ from bson.objectid import ObjectId
 from flask_cors import CORS
 
 
-client = pymongo.MongoClient("mongodb+srv://RamiroS1:yAYmiebZ9YcpJ0P8@cluster0.f3kcdqq.mongodb.net/testyAYmiebZ9YcpJ0P8")
+client = pymongo.MongoClient("mongodb://localhost:27017")
 db = client.get_database('Teemos')
 db_person = db.Person
-db_patient = db.Patient
-db_carer = db.Carer
+db_medicine = db.Medicine
 
 
 
@@ -38,5 +37,8 @@ def create_app():
     
     from .profile.profile import profile as profile_blueprint
     app.register_blueprint(profile_blueprint)
+    
+    from .medicine.medicine import medicine as medicine_blueprint
+    app.register_blueprint(medicine_blueprint)
 
     return app

@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify
 from flask_login import login_required, current_user
-from .. import db_person, db_carer, db_patient
+from .. import db_person
 from bson.objectid import ObjectId
 from werkzeug.security import generate_password_hash
 from ..models.user import User
@@ -39,7 +39,7 @@ def profile_edit():
     if user.email != email:
         exist_email = db_person.find_one({'email': email})
         if exist_email:
-            return jsonify({'message': 'El correo ya existe', 'Error': 400}), 400
+            return jsonify({'message': 'El correo ya existe', 'error': True}), 400
     # regiter user in mongodb
     updated_user = {
         '$set': {
@@ -68,7 +68,7 @@ def update_pwd():
     
 
     if not User.validate_login(user["password"], pwd):
-        return jsonify({'message': 'Por favor revisa tus credenciales', 'Error':400 }), 400
+        return jsonify({'message': 'Por favor revisa tus credenciales', 'error':True }), 400
     
     updated_pwd = {
         "$set": {
@@ -89,36 +89,9 @@ def add_role():
     new_role = request.json['role']
     
     if current_user.role == new_role:
-        return jsonify({'message': 'Ya tiene este rol', 'Error': 400}), 400
-    
-    
-    if new_role == 'patient':
-        db_carer.insert_one({
-            'id_person': ObjectId(current_user.username),
-        })
-    elif new_role == 'carer':
-        db_patient.insert_one({
-            'id_person': ObjectId(current_user.username),
-        })
-
+        return jsonify({'message': 'Ya tiene este rol', 'error': True}), 400
 
     db_person.update_one({'_id': ObjectId(current_user.username)}, {'$set': {'role': [current_user.role,new_role] }})  
             
     return jsonify({'message': 'Rol actualizado'}), 200
 
-
-@profile.route('/profile/add_attributtes', methods=['PUT'])
-@login_required
-def add_attributes():
-    weight = request.json['weight']
-    height = request.json['height']
-    blood_type = request.json['blood_type']
-    street = request.json['street']
-    neighborhood = request.json['neighborhood']
-    city = request.json['city']
-    additional = request.json['additional']
-    
-    db_patient.update_one({'id_person': ObjectId(current_user.username)}, {'$set': {'weight': weight, 'height': height, 'blood_type': blood_type, 'address': {'street': street, 'neighborhood': neighborhood, 'city': city, 'additional': additional}}})
-    
-    return jsonify({'message': 'Atributos actualizados'}), 200
-    
