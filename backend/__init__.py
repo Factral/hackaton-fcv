@@ -4,6 +4,8 @@ from flask_login import LoginManager
 import pymongo
 from .models.user import User
 from bson.objectid import ObjectId
+from flask_cors import CORS
+
 
 client = pymongo.MongoClient("mongodb+srv://RamiroS1:yAYmiebZ9YcpJ0P8@cluster0.f3kcdqq.mongodb.net/testyAYmiebZ9YcpJ0P8")
 db = client.get_database('Teemos')
@@ -17,6 +19,7 @@ def create_app():
     app = Flask(__name__)
     app.debug = True
     app.config['SECRET_KEY'] = '9OLWxND4o83j4K4iuopO'
+    CORS(app)
 
     login_manager = LoginManager()
     login_manager.init_app(app)
