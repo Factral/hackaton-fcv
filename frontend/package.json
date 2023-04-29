@@ -33,5 +33,8 @@
     "standard": "17.0.0",
     "typescript": "5.0.4",
     "vite": "4.3.2"
+  },
+  "eslintConfig": {
+    "extends": ".node_modules/standard/eslintrc.json"
   }
 }
