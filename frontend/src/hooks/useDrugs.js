@@ -8,13 +8,14 @@ export default function useDrugs () {
     drugs,
     addDrug
   } = DrugStore(state => state, shallow)
+
   const {
     successAlert,
     errorAlert
   } = AlertStore(state => state, shallow)
   const [loading, setLoading] = useState(false)
 
-  const addDrug = async drug => {
+  const addDrugToUser = async drug => {
     const response = await fetchAddDrug(drug)
     const message = response.message
 
@@ -28,6 +29,6 @@ export default function useDrugs () {
   }
   return {
     drugs,
-    addDrug
+    addDrugToUser
   }
 }

@@ -104,9 +104,10 @@ export function Eye ({ className, ...props }) {
     </svg>
   )
 }
-export const LogOut = ({ w = 24, h = 24 }) => {
+
+export const LogOut = ({ size = 24 }) => {
   return (
-    <svg xmlns='http://www.w3.org/2000/svg' className='icon icon-tabler icon-tabler-logout' width={w} height={h} viewBox='0 0 24 24' strokeWidth='1.5' stroke='currentColor' fill='none' strokeLinecap='round' strokeLinejoin='round'>
+    <svg xmlns='http://www.w3.org/2000/svg' className='icon icon-tabler icon-tabler-logout' width={size} height={size} viewBox='0 0 24 24' strokeWidth='1.5' stroke='currentColor' fill='none' strokeLinecap='round' strokeLinejoin='round'>
       <path stroke='none' d='M0 0h24v24H0z' fill='none' />
       <path d='M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2' />
       <path d='M7 12h14l-3 -3m0 6l3 -3' />
@@ -126,12 +127,32 @@ export function CloseEye ({ className, ...props }) {
   )
 }
 
-export const User = ({ w = 24, h = 24 }) => {
+export const User = ({ size = 24 }) => {
   return (
-    <svg xmlns='http://www.w3.org/2000/svg' className='icon icon-tabler icon-tabler-user' width={w} height={h} viewBox='0 0 24 24' strokeWidth='1.5' stroke='currentColor' fill='none' strokeLinecap='round' strokeLinejoin='round'>
+    <svg xmlns='http://www.w3.org/2000/svg' className='icon icon-tabler icon-tabler-user' width={size} height={size} viewBox='0 0 24 24' strokeWidth='1.5' stroke='currentColor' fill='none' strokeLinecap='round' strokeLinejoin='round'>
       <path stroke='none' d='M0 0h24v24H0z' fill='none' />
       <path d='M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0' />
       <path d='M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2' />
+    </svg>
+  )
+}
+
+export const Add = ({ size = 24 }) => {
+  return (
+    <svg xmlns='http://www.w3.org/2000/svg' className='icon icon-tabler icon-tabler-plus' width={size} height={size} viewBox='0 0 24 24' strokeWidth='2' stroke='currentColor' fill='none' strokeLinecap='round' strokeLinejoin='round'>
+      <path stroke='none' d='M0 0h24v24H0z' fill='none' />
+      <path d='M12 5l0 14' />
+      <path d='M5 12l14 0' />
+    </svg>
+  )
+}
+
+export const Drug = ({ size = 24 }) => {
+  return (
+    <svg xmlns='http://www.w3.org/2000/svg' className='icon icon-tabler icon-tabler-pill' width={size} height={size} viewBox='0 0 24 24' strokeWidth='2' stroke='currentColor' fill='none' strokeLinecap='round' strokeLinejoin='round'>
+      <path stroke='none' d='M0 0h24v24H0z' fill='none' />
+      <path d='M4.5 12.5l8 -8a4.94 4.94 0 0 1 7 7l-8 8a4.94 4.94 0 0 1 -7 -7' />
+      <path d='M8.5 8.5l7 7' />
     </svg>
   )
 }
