@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify
 from flask_login import login_required, current_user
-from .. import db_person, db_medicine
+from .. import db_person, db_medicine, db_treatment
 from bson.objectid import ObjectId
 
 medicine = Blueprint('medicine', __name__)
@@ -13,11 +13,10 @@ def medicine_post():
     start_hour = request.json['start_hour']
     frequency = request.json['frequency']
     start_amount = request.json['start_amount']
-    
-    user = current_user
+    id = request.json['treatment_id']
     
     new_medicine = {
-        'user_id': ObjectId(user.username),
+        'treatment_id': ObjectId(id),
         'name': name,
         'quantity': quantity,
         'start_hour': start_hour or None,
@@ -31,25 +30,14 @@ def medicine_post():
     
     return jsonify({'message': 'Medicina agregada'}), 200
 
-@medicine.route('/medicine', methods=['GET'])
+@medicine.route('/<id>/medicine', methods=['GET'])
 @login_required
-def medicine_get():
-    user = current_user
-    medicines = db_medicine.find({'user_id': ObjectId(user.username)})
+def medicine_get(id):
+    medicines = db_treatment.find_one({'_id': ObjectId(id)})
     medicines_list = []
-    for medicine in medicines:
-        medicine['_id'] = str(medicine['_id'])
-        medicine['user_id'] = str(medicine['user_id'])
-        medicines_list.append(medicine)
+    for medicine in medicines['medicaments']:
+        medicines_list.append(str(medicine))
     return jsonify(medicines_list), 200
-
-@medicine.route('/medicine/<id>', methods=['GET'])
-@login_required
-def medicine_get_by_id(id):
-    medicine = db_medicine.find_one({'_id': ObjectId(id)})
-    medicine['_id'] = str(medicine['_id'])
-    medicine['user_id'] = str(medicine['user_id'])
-    return jsonify(medicine), 200
 
 @medicine.route('/medicine/started_hour/<id>', methods=['PUT'])
 @login_required
