@@ -12,9 +12,11 @@ export default function useUser () {
   const [loading, setLoading] = useState(false)
 
   const logIn = async ({ email, password }) => {
+    setLoading(true)
     const response = await fetchLogin({ email, password })
     const message = response.message
     if (response.error) {
+      setLoading(false)
       errorAlert(message)
       return
     }
@@ -23,26 +25,33 @@ export default function useUser () {
     const newMessage = newUser.message
 
     if (newUser.error) {
+      setLoading(false)
       errorAlert(newMessage)
       return
     }
 
     setUser(newUser)
+    setLoading(false)
     successAlert(newMessage)
   }
 
   const logOut = async () => {
+    setLoading(true)
     const response = await fetchLogout()
     const message = response.message
     if (response.error) {
+      setLoading(false)
       errorAlert(message)
       return
     }
+
+    setLoading(false)
     resetUser()
   }
 
   return {
     logIn,
-    logOut
+    logOut,
+    loading
   }
 }
