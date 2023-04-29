@@ -7,7 +7,8 @@ from bson.objectid import ObjectId
 
 client = pymongo.MongoClient("mongodb+srv://RamiroS1:yAYmiebZ9YcpJ0P8@cluster0.f3kcdqq.mongodb.net/testyAYmiebZ9YcpJ0P8")
 db = client.get_database('Teemos')
-db = db.Persona
+db = db.Person
+
 
 def create_app():
     app = Flask(__name__)
