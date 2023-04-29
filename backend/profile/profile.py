@@ -21,7 +21,6 @@ def profile_():
         'role': user.role,
         'gender': user.gender,
         'document': user.document
-        
     }
     return jsonify(user_dict)
 
@@ -83,7 +82,7 @@ def update_pwd():
     
     
     
-@profile.route('/profile/add_role', methods=['PUT'])
+@profile.route('/profile/add_role', methods=['POST'])
 @login_required
 def add_role():
     
@@ -91,11 +90,15 @@ def add_role():
     
     if current_user.role == new_role:
         return jsonify({'message': 'Ya tiene este rol', 'error': True}), 400
-    else:
-        db_person.update_one({'_id': ObjectId(current_user.username)}, {'$set': {'role': [current_user.role,new_role] }})  
-        return jsonify({'message': 'Rol actualizado'}), 200
-    
-        
+    elif isinstance(current_user.role, list):
+        return jsonify({'message': 'Ya tiene los dos roles permitidos', 'error': True}), 400
 
+    db_person.update_one(
+        {'_id': ObjectId(current_user.username)},
+        {'$set': {
+                'role': [current_user.role,new_role] 
+             }}
+        )  
             
+    return jsonify({'message': 'Rol actualizado'}), 200
 
