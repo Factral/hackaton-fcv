@@ -13,6 +13,7 @@ db_person = db.Person
 db_medicine = db.Medicine
 db_treatment = db.Treatment
 db_appointment = db.Appointment
+db_nutrition = db.Nutrition
 
 
 
