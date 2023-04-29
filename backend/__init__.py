@@ -7,7 +7,10 @@ from bson.objectid import ObjectId
 
 client = pymongo.MongoClient("mongodb+srv://RamiroS1:yAYmiebZ9YcpJ0P8@cluster0.f3kcdqq.mongodb.net/testyAYmiebZ9YcpJ0P8")
 db = client.get_database('Teemos')
-db = db.Person
+db_person = db.Person
+db_patient = db.Patient
+db_carer = db.Carer
+
 
 
 def create_app():
@@ -21,8 +24,8 @@ def create_app():
 
     @login_manager.user_loader
     def load_user(user_id):
-        user = db.find_one({'_id': ObjectId(user_id)})
-        return User(str(user["_id"]), user["email"], user["name"], user["phone"], user["birthdate"], user['role'], user["gender"])
+        user = db_person.find_one({'_id': ObjectId(user_id)})
+        return User(str(user["_id"]), user["email"], user["name"], user["phone"], user["birthdate"], user['role'], user["gender"], user["document"])
 
     from .auth.auth import auth as auth_blueprint
     app.register_blueprint(auth_blueprint)

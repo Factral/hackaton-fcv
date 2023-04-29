@@ -2,9 +2,10 @@
 
 from flask import Blueprint, request, jsonify
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_login import login_user, logout_user, login_required
-from .. import db
+from flask_login import login_user, logout_user, login_required, current_user
+from .. import db_person, db_patient, db_carer
 from ..models.user import User
+from bson.objectid import ObjectId
 
 auth = Blueprint('auth', __name__)
 #login
@@ -17,20 +18,20 @@ def login_post():
     
     remember = True if request.json['remember'] else False
 
-    user = db.find_one({'email': email})
+    user = db_person.find_one({'email': email})
 
     if not user or not User.validate_login(user['password'], password):
         return jsonify({'message': 'Por favor revisa tus credenciales'}), 400
     
-    user_obj = User(str(user["_id"]), user["email"], user["name"], user['phone'],user["birthdate"],user["role"],user["gender"])
+    user_obj = User(str(user["_id"]), user["email"], user["name"], user['phone'],user["birthdate"],user["role"],user["gender"], user["document"])
 
     login_user(user_obj, remember=remember)
 
-    return jsonify({'message': 'Logged in'})
+    return jsonify({'message': 'Logged in'}), 200
 
 # signup
 
-@auth.route('/signup', methods=['POST'])
+@auth.route('/register', methods=['POST'])
 def signup_post():
 
     name = request.json['name']
@@ -40,13 +41,17 @@ def signup_post():
     birthdate = request.json['birthdate']
     role =  request.json['role']
     gender = request.json['gender']
+    document = request.json['document']
+    
+    
     
 
     # check if user already exists
-    user = db.find_one({'email': email})
+    user = db_person.find_one({'email': email})
+    
 
     if user: 
-        return jsonify({'message': 'User already exists'})
+        return jsonify({'message': 'User already exists' , 'Error': 400}), 400
     
 
     # regiter user in mongodb
@@ -57,10 +62,45 @@ def signup_post():
         'phone': phone,
         'birthdate': birthdate,
         'role': role,
-        'gender': gender
+        'gender': gender,
+        'document': document
     }
 
-    db.insert_one(new_user)
+    person = db_person.insert_one(new_user)
+    
+    if role == 'patient':
+        db_patient.insert_one({
+            'id_person': ObjectId(person.inserted_id),
+        })
+    elif role == 'carer':
+        patients = []
+        #agregar excepciones
+        for patient in request.json['id_patients']:
+            user = db_person.find_one({'document': patient})
+            patients.append(user['_id'])
+            
+        db_carer.insert_one({
+            'id_person':  ObjectId(person.inserted_id),
+            'id_patients': patients,
+        })
+    else:
+        db_patient.insert_one({
+            'id_person': ObjectId(person.inserted_id),
+        })
+        patients = []
+        for patient in request.json['id_patients']:
+            user = db_person.find_one({'document': patient})
+            patients.append(user['_id'])
+            
+        db_carer.insert_one({
+            'id_person':  ObjectId(person.inserted_id),
+            'id_patients': patients,
+        })
+
+        
+        
+    
+            
 
     return jsonify({'message': 'El usuario ha sido creado'}), 201
 
