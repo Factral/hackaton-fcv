@@ -1,14 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Dosis:wght@200;300;400;500;600;700;800&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root {
-  --green-50: #4DFF36;
-  --green-100: #43FF2C;
-  --green-200: #2FFF17;
-  --green-300: #1BFF03;
-  --green-400: #15ED00;
-  --green-500: #00D35B;
-  --green-600: #0FC500;
-  --green-700: #0CB000;
-  --green-800: #0A9C00;
-  --green-900: #088700;
   --white-100: #E9F8F1;
   --white-200: #C2E9D8;
   --green-gradient-100: #74F484;
@@ -20,4 +15,5 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: 'Dosis', sans-serif;
 }
