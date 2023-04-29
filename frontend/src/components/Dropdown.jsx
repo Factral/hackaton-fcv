@@ -1,11 +1,10 @@
 import { Menu, Transition } from '@headlessui/react'
-import { Fragment, useEffect, useRef, useState } from 'react'
-import { Adjustment, LogOut, User } from './Icons'
+import { Fragment } from 'react'
 
 export default function Dropdown ({ title, icon, className, children }) {
   return (
     <Menu as='div' className='relative inline-block text-left'>
-      <Menu.Button className='w-full justify-center text-main-green-600 hover:bg-gray-300 rounded-[50%] focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75'>
+      <Menu.Button className={className}>
         {icon}
       </Menu.Button>
       <Transition
