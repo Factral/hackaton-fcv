@@ -12,6 +12,10 @@ def profile_():
         'id': user.username,
         'email': user.email,
         'name': user.name, 
+        'phone': user.phone,
+        'birthdate': user.birthdate,
+        'role': user.role,
+        'gender': user.gender
     }
     return jsonify(user_dict)
     
