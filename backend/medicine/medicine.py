@@ -113,7 +113,7 @@ def medicine_edit(id):
     
     return jsonify({'message': 'Medicina actualizada'}), 200
 
-# get medciine info
+# get medicine info
 @medicine.route('/medicine/<id>', methods=['GET'])
 @login_required
 def medicine_info(id):
