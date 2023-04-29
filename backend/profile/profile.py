@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify
 from flask_login import login_required, current_user
-from .. import db
+from .. import db_person, db_carer, db_patient
 from bson.objectid import ObjectId
 from werkzeug.security import generate_password_hash
 from ..models.user import User
@@ -19,7 +19,8 @@ def profile_():
         'phone': user.phone,
         'birthdate': user.birthdate,
         'role': user.role,
-        'gender': user.gender
+        'gender': user.gender,
+        'document': user.document
     }
     return jsonify(user_dict)
 
@@ -32,12 +33,13 @@ def profile_edit():
     birthdate = request.json['birthdate']
     role = request.json['role']
     gender = request.json['gender']
+    document = request.json['document']
     user = current_user
     
     if user.email != email:
-        exist_email = db.find_one({'email': email})
+        exist_email = db_person.find_one({'email': email})
         if exist_email:
-            return jsonify({'message': 'El correo ya existe'}), 400
+            return jsonify({'message': 'El correo ya existe', 'Error': 400}), 400
     # regiter user in mongodb
     updated_user = {
         '$set': {
@@ -46,26 +48,27 @@ def profile_edit():
             "phone": phone,
             "birthdate": birthdate,
             "role": role,
-            "gender": gender
+            "gender": gender,
+            "document": document
         }
     }
     
-    db.update_one({'_id': ObjectId(user.username)}, updated_user)
+    db_person.update_one({'_id': ObjectId(user.username)}, updated_user)
     
-    return jsonify({'message': 'Usuario actualizado'})
+    return jsonify({'message': 'Usuario actualizado'}), 200
 
 # path for update password
 @profile.route('/profile/password', methods=['PUT'])
 @login_required
 def update_pwd():
-    user = db.find_one({'_id': ObjectId(current_user.username) })
+    user = db_person.find_one({'_id': ObjectId(current_user.username) })
     
     pwd = request.json['current_password']
     new_pwd = request.json['new_password']
     
 
     if not User.validate_login(user["password"], pwd):
-        return jsonify({'message': 'Por favor revisa tus credenciales'}), 400
+        return jsonify({'message': 'Por favor revisa tus credenciales', 'Error':400 }), 400
     
     updated_pwd = {
         "$set": {
@@ -73,7 +76,49 @@ def update_pwd():
         }
     }
     
-    db.update_one({'_id': ObjectId(current_user.username) }, updated_pwd)
+    db_person.update_one({'_id': ObjectId(current_user.username) }, updated_pwd)
     
-    return jsonify({'message': 'Contraseña actualizada'})
+    return jsonify({'message': 'Contraseña actualizada'}), 200
+    
+    
+    
+@profile.route('/profile/add_role', methods=['PUT'])
+@login_required
+def add_role():
+    
+    new_role = request.json['role']
+    
+    if current_user.role == new_role:
+        return jsonify({'message': 'Ya tiene este rol', 'Error': 400}), 400
+    
+    
+    if new_role == 'patient':
+        db_carer.insert_one({
+            'id_person': ObjectId(current_user.username),
+        })
+    elif new_role == 'carer':
+        db_patient.insert_one({
+            'id_person': ObjectId(current_user.username),
+        })
+
+
+    db_person.update_one({'_id': ObjectId(current_user.username)}, {'$set': {'role': [current_user.role,new_role] }})  
+            
+    return jsonify({'message': 'Rol actualizado'}), 200
+
+
+@profile.route('/profile/add_attributtes', methods=['PUT'])
+@login_required
+def add_attributes():
+    weight = request.json['weight']
+    height = request.json['height']
+    blood_type = request.json['blood_type']
+    street = request.json['street']
+    neighborhood = request.json['neighborhood']
+    city = request.json['city']
+    additional = request.json['additional']
+    
+    db_patient.update_one({'id_person': ObjectId(current_user.username)}, {'$set': {'weight': weight, 'height': height, 'blood_type': blood_type, 'address': {'street': street, 'neighborhood': neighborhood, 'city': city, 'additional': additional}}})
+    
+    return jsonify({'message': 'Atributos actualizados'}), 200
     
