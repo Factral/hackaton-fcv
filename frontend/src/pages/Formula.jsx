@@ -7,7 +7,7 @@ export default function Formula () {
   return (
     <>
       <Header />
-      {/* <ListOfCards /> */}
+      <ListOfCards />
       <Navbar />
       <AddMedicineButton />
     </>
