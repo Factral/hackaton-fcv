@@ -15,7 +15,7 @@ export default function Header () {
         <h1 className='text-2xl text-gray-500 capitalize'>{dateFormated}</h1>
         <ArrowRight />
       </div>
-      <Dropdown icon={<Adjustment />}>
+      <Dropdown icon={<Adjustment />} title='ajustes'>
         <DropdownItem icon={<User />}>
           Perfíl
         </DropdownItem>
