@@ -28,6 +28,11 @@ module.exports = {
           DEFAULT: '#E9F8F1',
           100: '#E9F8F1',
           200: '#C2E9D8'
+        },
+        'gradient-green': {
+          DEFAULT: '#30C243',
+          100: '#74F484',
+          200: '#0FC141'
         }
       }
     }
