@@ -1,5 +1,5 @@
 .main-shadow {
-  box-shadow: -3px 3px 0px #0FC141;
+  filter: drop-shadow(-3px 3px #0FC141);
 }
 
 .main-shadow-text {

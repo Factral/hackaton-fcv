@@ -5,15 +5,17 @@ import UserStore from '../store/UserStore'
 import { shallow } from 'zustand/shallow'
 import AlertStore from '../store/AlertStore'
 import fetchLogout from '../services/fetchLogout'
+import { useNavigate } from 'react-router-dom'
 
 export default function useUser () {
   const { setUser, resetUser } = UserStore((state) => state, shallow)
   const { successAlert, errorAlert } = AlertStore((state) => state, shallow)
   const [loading, setLoading] = useState(false)
+  const navigate = useNavigate()
 
-  const logIn = async ({ email, password }) => {
+  const logIn = async (data) => {
     setLoading(true)
-    const response = await fetchLogin({ email, password })
+    const response = await fetchLogin(data)
     const message = response.message
     if (response.error) {
       setLoading(false)
@@ -33,6 +35,7 @@ export default function useUser () {
     setUser(newUser)
     setLoading(false)
     successAlert(newMessage)
+    navigate('/')
   }
 
   const logOut = async () => {
@@ -47,6 +50,7 @@ export default function useUser () {
 
     setLoading(false)
     resetUser()
+    navigate('/auth/login')
   }
 
   return {

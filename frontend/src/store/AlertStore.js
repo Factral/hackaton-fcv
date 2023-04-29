@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 
-const alertInitial = { type: 'warning', message: 'Holaaaa' }
+const alertInitial = { type: '', message: '' }
 
 const AlertStore = create((set) => ({
   alert: alertInitial,

@@ -1,4 +1,5 @@
 import AlertStore from '../store/AlertStore'
+import { Transition } from '@headlessui/react'
 import { shallow } from 'zustand/shallow'
 
 export default function AlertComponent () {
@@ -11,9 +12,17 @@ export default function AlertComponent () {
     info: 'text-blue-500'
   }
 
-  if (!type) return null
-
   return (
-    <div className={`py-3 px-9 bg-white rounded-xl z-10 shadow-lg text-left fixed left-10 max-w-[330px] w-screen bottom-5 text-normal ${typeAlert[type]}`}>{message}</div>
+    <Transition
+      show={Boolean(type)}
+      enter='transition-opacity duration-75'
+      enterFrom='opacity-0'
+      enterTo='opacity-100'
+      leave='transition-opacity duration-150'
+      leaveFrom='opacity-100'
+      leaveTo='opacity-0'
+    >
+      <div className={`py-3 px-9 bg-white rounded-xl z-10 shadow-lg text-left fixed w-fit left-5 max-w-[330px] bottom-5 text-normal font-semibold ${typeAlert[type]}`}>{message}</div>
+    </Transition>
   )
 }

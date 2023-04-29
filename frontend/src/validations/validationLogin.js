@@ -18,6 +18,13 @@ const validationLogin = {
       required: 'El password es requerido',
       minLength: 'El password debe tener al menos 3 caracteres'
     }
+  },
+  remember: {
+    validate: {
+      required: false
+    },
+    messages: {
+    }
   }
 }
 
