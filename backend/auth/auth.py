@@ -4,7 +4,7 @@ from flask import Blueprint, request, jsonify
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_user, logout_user, login_required
 from .. import db
-from .user import User
+from ..user import User
 
 auth = Blueprint('auth', __name__)
 #login
@@ -20,9 +20,7 @@ def login_post():
     if not user or not User.validate_login(user['password'], password):
         return jsonify({'message': 'Por favor revisa tus credenciales'}), 400
     
-    
-    
-    user_obj = User(str(user["_id"]), user["email"])
+    user_obj = User(str(user["_id"]), user["email"], user["name"])
 
     login_user(user_obj, remember=remember)
 
@@ -54,8 +52,9 @@ def signup_post():
 
     return jsonify({'message': 'El usuario ha sido creado'}), 201
 
-@auth.route('/logout')
+@auth.route('/logout', methods=['POST'])
 @login_required
 def logout():
     logout_user()
     return jsonify({'message': 'Logged out'}), 200
+
