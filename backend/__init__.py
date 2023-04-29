@@ -1,5 +1,4 @@
 # init.py
-
 from flask import Flask
 from flask_login import LoginManager 
 import pymongo
@@ -24,10 +23,13 @@ def create_app():
         user = db.find_one({'_id': ObjectId(user_id)})
         return User(str(user["_id"]), user["email"], user["name"])
 
-    from .auth import auth as auth_blueprint
+    from .auth.auth import auth as auth_blueprint
     app.register_blueprint(auth_blueprint)
 
     from .main import main as main_blueprint
     app.register_blueprint(main_blueprint)
+    
+    from .profile.profile import profile as profile_blueprint
+    app.register_blueprint(profile_blueprint)
 
     return app
