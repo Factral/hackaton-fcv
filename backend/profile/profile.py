@@ -22,7 +22,7 @@ def profile_():
         'gender': user.gender,
         'document': user.document
     }
-    return jsonify(user_dict)
+    return jsonify({'message': user_dict}), 200
 
 @profile.route('/profile/edit', methods=['PUT'])
 @login_required
