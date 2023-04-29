@@ -2,6 +2,8 @@ from flask import Blueprint, request, jsonify
 from flask_login import login_required, current_user
 from .. import db
 from bson.objectid import ObjectId
+from werkzeug.security import generate_password_hash
+from ..models.user import User
 
 profile = Blueprint('profile', __name__)
 
@@ -52,4 +54,26 @@ def profile_edit():
     
     return jsonify({'message': 'Usuario actualizado'})
 
+# path for update password
+@profile.route('/profile/password', methods=['PUT'])
+@login_required
+def update_pwd():
+    user = db.find_one({'_id': ObjectId(current_user.username) })
+    
+    pwd = request.json['current_password']
+    new_pwd = request.json['new_password']
+    
+
+    if not User.validate_login(user["password"], pwd):
+        return jsonify({'message': 'Por favor revisa tus credenciales'}), 400
+    
+    updated_pwd = {
+        "$set": {
+            "password": generate_password_hash(new_pwd, method='sha256')
+        }
+    }
+    
+    db.update_one({'_id': ObjectId(current_user.username) }, updated_pwd)
+    
+    return jsonify({'message': 'Contraseña actualizada'})
     
