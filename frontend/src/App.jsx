@@ -2,6 +2,7 @@
 import { Route, Routes } from 'react-router-dom'
 import Login from './pages/Login'
 import Formula from './pages/Formula'
+import './stylesAdd.css'
 
 function App () {
   return (

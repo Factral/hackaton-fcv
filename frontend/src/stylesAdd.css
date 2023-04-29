@@ -1,0 +1,7 @@
+.main-shadow {
+  box-shadow: -3px 3px 0px #0FC141;
+}
+
+.main-shadow-text {
+  text-shadow: #0FC141 -3px 3px;
+}
