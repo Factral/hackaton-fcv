@@ -12,17 +12,17 @@ db = db.Persona
 
 def create_app():
     app = Flask(__name__)
+    app.debug = True
     app.config['SECRET_KEY'] = '9OLWxND4o83j4K4iuopO'
 
     login_manager = LoginManager()
-    login_manager.login_view = 'auth.login'
     login_manager.init_app(app)
 
 
     @login_manager.user_loader
     def load_user(user_id):
         user = db.find_one({'_id': ObjectId(user_id)})
-        return User(str(user["_id"]))
+        return User(str(user["_id"]), user["email"], user["name"])
 
     from .auth import auth as auth_blueprint
     app.register_blueprint(auth_blueprint)
