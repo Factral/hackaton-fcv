@@ -1,5 +1,5 @@
-import DropMenu from './DropMenu'
-import { ArrowLeft, ArrowRight, Calendar } from './Icons'
+import Dropdown, { DropdownItem } from './Dropdown'
+import { Adjustment, ArrowLeft, ArrowRight, Calendar, LogOut, User } from './Icons'
 
 export default function Header () {
   const date = new Date().toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long' })
@@ -15,7 +15,14 @@ export default function Header () {
         <h1 className='text-2xl text-gray-500 capitalize'>{dateFormated}</h1>
         <ArrowRight />
       </div>
-      <DropMenu />
+      <Dropdown icon={<Adjustment />}>
+        <DropdownItem icon={<User />}>
+          Perfíl
+        </DropdownItem>
+        <DropdownItem icon={<LogOut />}>
+          Cerrar sesión
+        </DropdownItem>
+      </Dropdown>
     </header>
   )
 }
