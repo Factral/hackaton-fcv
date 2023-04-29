@@ -8,6 +8,7 @@ import { useState } from 'react'
 import Visible from './Visible'
 import validationRegister from '../validations/validationRegister'
 import { ROLE_CARRER, ROLE_PATIENT } from '../constants/magicStrings'
+import AlertStore from '../store/AlertStore'
 
 export default function FormRegister () {
   const { register, handleSubmit, formState: { errors } } = useForm()
