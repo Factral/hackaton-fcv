@@ -14,9 +14,9 @@ export default function useUser () {
   const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
 
-  const signUp = async () => {
+  const signUp = async (data) => {
     setLoading(true)
-    const response = await fetchSignUp()
+    const response = await fetchSignUp(data)
     setLoading(false)
     const message = response.message
     if (response.error) {

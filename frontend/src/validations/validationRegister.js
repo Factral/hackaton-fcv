@@ -16,7 +16,7 @@ const validationRegister = {
   phone: {
     validate: {
       required: true,
-      pattern: /^[a-z0-9.-_]+@[a-z]+\.[a-z]{2,3}$/
+      pattern: /^[0-9]{10}$/
     },
     messages: {
       required: 'El teléfono es requerido',

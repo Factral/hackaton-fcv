@@ -1,7 +1,8 @@
 import config from '../config'
 
 export default function fetchSignUp (data) {
-  return fetch(`${config.URL_API}/signup`, {
+  console.log({ data })
+  return fetch(`${config.URL_API}/register`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'

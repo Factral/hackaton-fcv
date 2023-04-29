@@ -8,7 +8,6 @@ import { useState } from 'react'
 import Visible from './Visible'
 import validationRegister from '../validations/validationRegister'
 import { ROLE_CARRER, ROLE_PATIENT } from '../constants/magicStrings'
-import AlertStore from '../store/AlertStore'
 
 export default function FormRegister () {
   const { register, handleSubmit, formState: { errors } } = useForm()
@@ -27,6 +26,7 @@ export default function FormRegister () {
           <div className='flex flex-col gap-2 '>
             <Input register={register} validation={validationRegister} placeholder='Brayan Villamizar' errors={errors} label='Nombre Completo' nameRegister='name' typeInput='text' />
             <Input register={register} validation={validationRegister} placeholder='tucorreo@tudominio.com' errors={errors} label='Correo electrónico' nameRegister='email' typeInput='text' />
+            <Input register={register} validation={validationRegister} placeholder='315532332' errors={errors} label='Teléfono' nameRegister='phone' typeInput='text' />
             <Input register={register} validation={validationRegister} errors={errors} label='Fecha de nacimiento' nameRegister='birthdate' typeInput='date' />
             <Select register={register} validation={validationRegister} errors={errors} label='Rol' nameRegister='role'>
               <option value={ROLE_PATIENT}>Paciente</option>
