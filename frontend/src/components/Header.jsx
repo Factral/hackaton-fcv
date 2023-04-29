@@ -1,5 +1,5 @@
 import DropMenu from './DropMenu'
-import { Adjustement, ArrowLeft, ArrowRight, Calendar } from './Icons'
+import { ArrowLeft, ArrowRight, Calendar } from './Icons'
 
 export default function Header () {
   const date = new Date().toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long' })

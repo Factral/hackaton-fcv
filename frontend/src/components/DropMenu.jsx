@@ -1,6 +1,6 @@
 import { Menu, Transition } from '@headlessui/react'
 import { Fragment, useEffect, useRef, useState } from 'react'
-import { Adjustement, LogOut } from './Icons'
+import { Adjustment, LogOut, User } from './Icons'
 
 export default function DropMenu () {
   return (
@@ -8,7 +8,7 @@ export default function DropMenu () {
       <Menu as='div' className='relative inline-block'>
         <div>
           <Menu.Button className='w-full justify-center text-main-green-600 hover:bg-gray-300 rounded-[50%] focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75'>
-            <Adjustement />
+            <Adjustment />
           </Menu.Button>
         </div>
         <Transition
@@ -27,22 +27,10 @@ export default function DropMenu () {
                   <button
                     className={`${
                       active ? 'bg-violet-500 text-white' : 'text-gray-900'
-                    } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+                    } group flex w-full gap-2 items-center rounded-md px-2 py-2 text-sm`}
                   >
-                    {active
-                      ? (
-                        <EditActiveIcon
-                          className='mr-2 h-5 w-5'
-                          aria-hidden='true'
-                        />
-                        )
-                      : (
-                        <EditInactiveIcon
-                          className='mr-2 h-5 w-5'
-                          aria-hidden='true'
-                        />
-                        )}
-                    Edit
+                    <User w={20} h={20} />
+                    Mi Perfíl
                   </button>
                 )}
               </Menu.Item>
@@ -77,65 +65,9 @@ export default function DropMenu () {
                   <button
                     className={`${
                       active ? 'bg-violet-500 text-white' : 'text-gray-900'
-                    } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
-                  >
-                    {active
-                      ? (
-                        <ArchiveActiveIcon
-                          className='mr-2 h-5 w-5'
-                          aria-hidden='true'
-                        />
-                        )
-                      : (
-                        <ArchiveInactiveIcon
-                          className='mr-2 h-5 w-5'
-                          aria-hidden='true'
-                        />
-                        )}
-                    Archive
-                  </button>
-                )}
-              </Menu.Item>
-              <Menu.Item>
-                {({ active }) => (
-                  <button
-                    className={`${
-                      active ? 'bg-violet-500 text-white' : 'text-gray-900'
-                    } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
-                  >
-                    {active
-                      ? (
-                        <MoveActiveIcon
-                          className='mr-2 h-5 w-5'
-                          aria-hidden='true'
-                        />
-                        )
-                      : (
-                        <MoveInactiveIcon
-                          className='mr-2 h-5 w-5'
-                          aria-hidden='true'
-                        />
-                        )}
-                    Move
-                  </button>
-                )}
-              </Menu.Item>
-            </div>
-            <div className='px-1 py-1'>
-              <Menu.Item>
-                {({ active }) => (
-                  <button
-                    className={`${
-                      active ? 'bg-violet-500 text-white' : 'text-gray-900'
                     } group flex w-full items-center gap-2 rounded-md px-2 py-2 text-sm`}
                   >
-                    {active
-                      ? (
-                        <LogOut />
-                        )
-                      : (
-                        <LogOut />
-                        )}
+                    <LogOut w={20} h={20} />
                     Delete
                   </button>
                 )}
