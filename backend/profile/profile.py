@@ -21,6 +21,7 @@ def profile_():
         'role': user.role,
         'gender': user.gender,
         'document': user.document
+        
     }
     return jsonify(user_dict)
 
@@ -90,8 +91,11 @@ def add_role():
     
     if current_user.role == new_role:
         return jsonify({'message': 'Ya tiene este rol', 'error': True}), 400
+    else:
+        db_person.update_one({'_id': ObjectId(current_user.username)}, {'$set': {'role': [current_user.role,new_role] }})  
+        return jsonify({'message': 'Rol actualizado'}), 200
+    
+        
 
-    db_person.update_one({'_id': ObjectId(current_user.username)}, {'$set': {'role': [current_user.role,new_role] }})  
             
-    return jsonify({'message': 'Rol actualizado'}), 200
 
