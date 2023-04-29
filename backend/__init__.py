@@ -11,6 +11,7 @@ client = pymongo.MongoClient("mongodb://localhost:27017")
 db = client.get_database('Teemos')
 db_person = db.Person
 db_medicine = db.Medicine
+db_appointment = db.Appointment
 
 
 
@@ -40,5 +41,8 @@ def create_app():
     
     from .medicine.medicine import medicine as medicine_blueprint
     app.register_blueprint(medicine_blueprint)
+    
+    from .appointment.appointment import appointment as appointment_blueprint
+    app.register_blueprint(appointment_blueprint)
 
     return app
