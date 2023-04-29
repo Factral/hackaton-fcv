@@ -1,10 +1,7 @@
-import { createStore } from 'zustand'
+import { create } from 'zustand'
 
 export default function UserStore () {
-  const [state, setState] = createStore({
+  const [state, setState] = create((set) => {
     
   })
-  return (
-    <div>UsuarioReducer</div>
-  )
 }
