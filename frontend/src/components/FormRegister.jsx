@@ -21,7 +21,7 @@ export default function FormRegister () {
   return (
     <>
       {loading && <Loading />}
-      <form className='w-full max-h-[500px] h-[80vh] clean-scroll overflow-y-auto' onSubmit={handleSubmit(onSubmitFucntion)}>
+      <form className='w-full max-h-[500px] clean-scroll overflow-y-auto' onSubmit={handleSubmit(onSubmitFucntion)}>
         <div className='flex flex-col gap-3 w-full'>
           <div className='flex flex-col gap-2 '>
             <Input register={register} validation={validationRegister} placeholder='Brayan Villamizar' errors={errors} label='Nombre Completo' nameRegister='name' typeInput='text' />

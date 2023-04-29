@@ -1,7 +1,6 @@
 import config from '../config'
 
 export default function fetchLogin (data) {
-  console.log({ data })
   return fetch(`${config.URL_API}/login`, {
     method: 'POST',
     headers: {
