@@ -5,7 +5,7 @@
     },
     "extends": [
         "plugin:react/recommended",
-        "standard-with-typescript"
+        "./node_modules/standard/eslintrc.json"
     ],
     "overrides": [
     ],
@@ -17,5 +17,6 @@
         "react"
     ],
     "rules": {
+        "react/react-in-jsx-scope": "off"
     }
 }
