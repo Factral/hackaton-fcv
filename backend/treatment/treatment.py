@@ -10,10 +10,17 @@ treatment = Blueprint('treatment', __name__)
 def treatment_set():
     user = current_user
 
-    if 'patient' not in user.role:
-        return jsonify({'message': 'No tienes permisos para realizar esta acción', 'error': True}), 400
+    if user.role == 'carer':
+        patient = request.json['patient']
+        if patient is None:
+            return jsonify({'message': 'No se ha especificado el paciente', 'error': True}), 400
+        elif patient not in user.patients:
+            return jsonify({'message': 'No tienes permisos para realizar esta acción', 'error': True}), 400
+        person = db_person.find_one({'_id': ObjectId(patient)})
+    else:
+        person = user.username
     
-    db_person.update_one({'_id': ObjectId(user.username)}, {'$set': {'treatments': request.json['treatments']}})
+    db_person.update_one({'_id': ObjectId(person)}, {'$set': {'treatments': request.json['treatments']}})
 
     return jsonify({'message': 'Tratamiento registrado'}), 200  
 
@@ -21,8 +28,19 @@ def treatment_set():
 @treatment.route('/treatments', methods=['GET'])
 @login_required
 def treatment_get():
+    
     user = current_user
-    person = db_person.find_one({'_id': ObjectId(user.username)})
+    carer = db_person.find_one({'_id': ObjectId(user.username)})
+    if user.role == 'carer':
+        patient = request.args.get('patient')
+        if patient is None:
+            return jsonify({'message': 'No se ha especificado el paciente', 'error': True}), 400
+        elif patient not in carer['patients']:
+            return jsonify({'message': 'No tienes permisos para realizar esta acción', 'error': True}), 400
+            
+        person = db_person.find_one({'_id': ObjectId(patient)})
+    else:        
+        person = db_person.find_one({'_id': ObjectId(user.username)})
 
     if 'treatments' not in person:
         return jsonify([]), 200
