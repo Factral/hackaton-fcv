@@ -1,6 +1,7 @@
 from flask import Blueprint, request, jsonify
 from flask_login import login_required, current_user
-from .. import db_person, db_medicine, db_treatment, db_nutrition
+from .. import db_person, db_medicine, db_treatment, db_nutrition, login_manager
+from flask_login.utils import encode_cookie, decode_cookie
 from bson.objectid import ObjectId
 
 treatment = Blueprint('treatment', __name__)
@@ -25,11 +26,15 @@ def treatment_set():
     return jsonify({'message': 'Tratamiento registrado'}), 200  
 
 
-@treatment.route('/treatments', methods=['GET'])
+@treatment.route('/treatments', methods=['POST'])
 @login_required
 def treatment_get():
-    
-    user = current_user
+    if 'session' not in request.json:
+        return jsonify({'message': 'No hay session', 'error': True}), 400
+    session = request.json['session']
+    b = decode_cookie(str(session))
+    user = login_manager._user_callback(b)
+
     carer = db_person.find_one({'_id': ObjectId(user.username)})
     if user.role == 'carer':
         patient = request.args.get('patient')
