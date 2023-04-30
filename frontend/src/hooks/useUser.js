@@ -30,7 +30,7 @@ export default function useUser () {
   const logIn = async (data) => {
     setLoading(true)
     const response = await fetchLogin(data)
-    const { rebember } = data
+    const { remember } = data
     const message = response.message
     console.log({ message })
     if (response.error) {
@@ -39,35 +39,20 @@ export default function useUser () {
       return
     }
 
-    if (rebember) localStorage.setItem('user', JSON.stringify(message))
-    setUser({ role: message })
-    setLoading(false)
-    navigate('/')
-  }
+    if (remember) localStorage.setItem('user', JSON.stringify(response.user))
 
-  const getUser = async () => {
-    const userLocal = localStorage.getItem('user')
-    setLoading(true)
-  
-    const response = await fetchGetUser()
-    const message = response.message
-    console.log({ message })
-    if (response.error) {
-      setLoading(false)
-      errorAlert(message)
-      return
-    }
-
-    if (userLocal) localStorage.setItem('user', JSON.stringify(message))
+    setUser(response.user)
     setLoading(false)
-    setUser(message)
+    successAlert('Bienvenido ' + response.user.name)
+    navigate('/home')
   }
 
   const logOut = async () => {
     setLoading(true)
     const response = await fetchLogout()
-    const message = response.message
-    if (response.error) {
+    console.log({ response })
+    const message = response?.message || 'Sesión terminada'
+    if (response?.error) {
       setLoading(false)
       errorAlert(message)
       return
@@ -82,7 +67,6 @@ export default function useUser () {
     logIn,
     logOut,
     loading,
-    signUp,
-    getUser
+    signUp
   }
 }

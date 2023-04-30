@@ -9,8 +9,10 @@ import Register from './pages/Register'
 import Layout from './components/Layout'
 import MyChat from './pages/MyChat'
 import VerifyUserLogued from './security/VerifyUserLogued'
+import useCloseAlert from './hooks/useCloseAlert'
 
 function App () {
+  useCloseAlert()
   return (
     <>
       <Routes>

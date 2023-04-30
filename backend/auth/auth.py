@@ -29,6 +29,7 @@ def login_post():
     
     user = current_user
     user_dict = {
+        'id': user.username,
         'name': user.name,
         'email': user.email,
         'phone': user.phone,

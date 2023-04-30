@@ -5,6 +5,8 @@ import { SendIcon } from '../components/Icons'
 import transformHours from '../logic/transformHours'
 import Message from '../components/Message'
 import { MY_ID } from '../constants/magicStrings'
+import UserStore from '../store/UserStore'
+import { shallow } from 'zustand/shallow'
 
 const sockect = io('http://localhost:3000')
 
@@ -158,6 +160,7 @@ export default function MyChat () {
   const [isConnected, setIsConnected] = useState(false)
   const [nuevoMensaje, setNuevoMensaje] = useState('')
   const [mensajes, setMensajes] = useState([])
+  const { user } = UserStore(state => state, shallow)
 
   useEffect(() => {
     ref.current.scrollTop = ref.current.scrollHeight - ref.current.clientHeight
@@ -176,7 +179,7 @@ export default function MyChat () {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    const mensajeEnviar = { id: new Date().getTime(), userId: MY_ID, mensaje: nuevoMensaje, fecha: getDate(), hora: transformHours() }
+    const mensajeEnviar = { id: new Date().getTime(), userId: user.id, mensaje: nuevoMensaje, fecha: getDate(), hora: transformHours(), name: user.name }
     sockect.emit('mensaje_normal', mensajeEnviar)
     setNuevoMensaje('')
   }

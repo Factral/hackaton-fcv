@@ -15,14 +15,14 @@ export default function AlertComponent () {
   return (
     <Transition
       show={Boolean(type)}
-      enter='transition-opacity duration-300'
-      enterFrom='opacity-0'
-      enterTo='opacity-100'
-      leave='transition-opacity duration-300'
-      leaveFrom='opacity-100'
-      leaveTo='opacity-0'
+      enter='transition duration-300 ease-out'
+      enterFrom='opacity-0 -top-10'
+      enterTo='opacity-100 top-10'
+      leave='transition ease-in duration-300'
+      leaveFrom='opacity-100 -top-10'
+      leaveTo='opacity-0 top-10'
     >
-      <div className={`py-3 px-9 bg-white rounded-xl z-10 shadow-lg text-left fixed w-fit left-5 max-w-[330px] bottom-5 text-normal font-semibold ${typeAlert[type]}`}>{message}</div>
+      <div className={`py-5 px-12 bg-white rounded-xl z-10 shadow-xl text-left fixed w-fit top-10 left-1/2 -translate-x-1/2 max-w-[330px] text-lg font-semibold ${typeAlert[type]}`}>{message}</div>
     </Transition>
   )
 }

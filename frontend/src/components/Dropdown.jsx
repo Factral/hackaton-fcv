@@ -29,7 +29,8 @@ export function DropdownItem ({ className, onClick, children, icon }) {
   return (
     <Menu.Item>
       <div
-        className={`flex w-full gap-2 items-center text-gray-900 rounded-md p-2 text-sm font-medium hover:bg-main-green-600 hover:text-white duration-200
+        onClick={onClick}
+        className={`cursor-pointer flex w-full gap-2 items-center text-gray-900 rounded-md p-2 text-sm font-medium hover:bg-main-green-600 hover:text-white duration-200
           ${className}`}
       >
         <div className='flex items-center'>
