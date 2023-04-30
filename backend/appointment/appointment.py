@@ -43,17 +43,32 @@ def appointment_post():
     hour = time_final.hour
     minute = time_final.minute
     second = time_final.second
-    user = current_user
-
     
-    message = "Tienes una cita médica de "+name+" programada para el día " + date + " a las " + time + " con el profesional " + professional + " en la dirección " + address + "."
+    
+    user = current_user
+    carer = {}
+    carers = db_person.find({'patients': user.username})
+    if carers:
+        carers_ = []
+        for carer in carers:
+            carer_dict = {
+            'id': str(carer['_id']),
+            'email': carer['email'],
+            'name': carer['name'],
+            'phone': carer['phone'],
+            }
+            carers_.append(carer_dict)
+        carer = carers_[0]
+        
+    recipients = [user.email, carer['email']] if carer else [user.email]
+    
+    message = "El paciente "+user.name+" tiene una cita médica de "+name+" programada para el día " + date + " a las " + time + " con el profesional " + professional + " en la dirección " + address + "."
     mail = Mail()
     msg = Message('Cita médica',
                         sender="noreply@gmail.com",
-                        recipients=[user.email],
+                        recipients=recipients,
                         body=message)
     mail.send(msg)
-    
     
     
     def send_whatsapp(message,phone):
@@ -63,6 +78,8 @@ def appointment_post():
         current_hour = current_time.hour
         current_minute = current_time.minute + 1
         pwk.sendwhatmsg('+57 '+phone,message,current_hour,current_minute,20,True,2)
+            
+        
         
     scheduler1 = BackgroundScheduler()
     scheduler1.add_job(send_whatsapp, 'date', run_date=datetime.now(),args=[message,user.phone])
@@ -72,7 +89,7 @@ def appointment_post():
     
 
     
-    def job(email,phone):
+    def job(emails,phone):
         from flask import Flask
         from flask_mail import Message, Mail
         from datetime import datetime
@@ -84,12 +101,15 @@ def appointment_post():
         app.config['MAIL_PASSWORD'] = '0e1df819bdbc13'
         app.config['MAIL_USE_TLS'] = True
         app.config['MAIL_USE_SSL'] = False
+        
+        
+        
         mailer = Mail(app)
         
         msg = "En 30 minutos tienes una cita médica de "+ name +" programada en la dirección " + address + "."
-        message = Message('Cita médica',
+        message = Message('Recordatorio de cita médica',
                         sender="noreply@gmail.com",
-                        recipients=[email],
+                        recipients=emails,
                         body=msg)
         mailer = Mail(app)
         with app.app_context():
@@ -101,7 +121,7 @@ def appointment_post():
     
         
     scheduler = BackgroundScheduler()
-    scheduler.add_job(job, 'date', run_date=datetime(year, month, day, hour, minute, second), args=[user.email,user.phone])
+    scheduler.add_job(job, 'date', run_date=datetime(year, month, day, hour, minute, second), args=[recipients,user.phone])
     scheduler.start()
 
     db_appointment.insert_one(new_appointment)
