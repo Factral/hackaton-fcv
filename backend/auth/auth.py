@@ -26,8 +26,19 @@ def login_post():
     user_obj = User(str(user["_id"]), user["email"], user["name"], user['phone'],user["birthdate"],user["role"],user["gender"], user["document"])
 
     login_user(user_obj, remember=remember)
+    
+    user = current_user
+    user_dict = {
+        'name': user.name,
+        'email': user.email,
+        'phone': user.phone,
+        'birthdate': user.birthdate,
+        'role': user.role,
+        'gender': user.gender,
+        'document': user.document
+    }
 
-    return jsonify({'message': 'Has iniciado sesión'}), 200
+    return jsonify({'message': 'Has iniciado sesión', 'user':user_dict}), 200
 
 # signup
 
