@@ -4,7 +4,7 @@ export const navbarItems = [
   {
     icon: <CheckList />,
     label: 'Formula',
-    path: '/'
+    path: '/home'
   },
   {
     icon: <SearchDrugs />,

@@ -8,6 +8,7 @@ const io = require('socket.io')(server, {
 
 io.on('connection', (socket) => {
   console.log('se ha conectado un cliente')
+  console.log(socket)
   socket.on('mensaje_normal', (data) => {
     io.emit('mensaje_normal', data)
   })

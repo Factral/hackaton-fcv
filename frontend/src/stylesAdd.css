@@ -26,3 +26,13 @@
   background: #52f07f8a;
   border-radius: 30px;
 }
+
+.my-class {
+  background: rgba(152, 255, 152, 0.705);
+  margin-left: auto;
+}
+
+.other-class {
+  background: rgba(219, 219, 219, 0.705);
+  margin-right: auto;
+}

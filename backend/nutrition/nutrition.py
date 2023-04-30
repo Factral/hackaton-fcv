@@ -21,7 +21,7 @@ def nutrition_post():
 
 #obtener nutricion de un tratamiento dado por id
 @nutrition.route('/<id>/nutrition', methods=['GET'])
-@login_required
+#@login_required
 def nutrition_get(id):
     nutritions = db_treatment.find_one({'_id': ObjectId(id)})
     nutritions_list = []

@@ -9,8 +9,10 @@ import Register from './pages/Register'
 import Layout from './components/Layout'
 import MyChat from './pages/MyChat'
 import VerifyUserLogued from './security/VerifyUserLogued'
+import useCloseAlert from './hooks/useCloseAlert'
 
 function App () {
+  useCloseAlert()
   return (
     <>
       <Routes>
@@ -19,7 +21,7 @@ function App () {
           <Route path='register' element={<Register />} />
         </Route>
         <Route path='/' element={<VerifyUserLogued><Layout /></VerifyUserLogued>}>
-          <Route index element={<Formula />} />
+          <Route path='home' element={<Formula />} />
           <Route path='chat' element={<MyChat />} />
         </Route>
       </Routes>

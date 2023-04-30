@@ -9,7 +9,11 @@ treatment = Blueprint('treatment', __name__)
 @treatment.route('/set_treatment', methods=['POST'])
 @login_required
 def treatment_set():
-    user = current_user
+    if 'session' not in request.json:
+        return jsonify({'message': 'No hay session', 'error': True}), 400
+    session = request.json['session']
+    b = decode_cookie(str(session))
+    user = login_manager._user_callback(b)
 
     if user.role == 'carer':
         patient = request.json['patient']
@@ -27,7 +31,7 @@ def treatment_set():
 
 
 @treatment.route('/treatments', methods=['POST'])
-@login_required
+#@login_required
 def treatment_get():
     if 'session' not in request.json:
         return jsonify({'message': 'No hay session', 'error': True}), 400
