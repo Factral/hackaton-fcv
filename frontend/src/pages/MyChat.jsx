@@ -163,7 +163,6 @@ export default function MyChat () {
   const { user } = UserStore(state => state, shallow)
 
   useEffect(() => {
-    ref.current.scrollTop = ref.current.scrollHeight - ref.current.clientHeight
     sockect.on('connect', () => {
       setIsConnected(true)
     })
@@ -175,10 +174,21 @@ export default function MyChat () {
     sockect.on('disconnect', () => {
       setIsConnected(false)
     })
+
+    return () => {
+      sockect.off('mensaje_normal')
+      sockect.off('connect')
+      sockect.off('disconnect')
+    }
   }, [])
+
+  useEffect(() => {
+    ref.current.scrollTop = ref.current.scrollHeight - ref.current.clientHeight
+  }, [mensajes])
 
   const handleSubmit = (e) => {
     e.preventDefault()
+    if (!nuevoMensaje.trim()) return
     const mensajeEnviar = { id: new Date().getTime(), userId: user.id, mensaje: nuevoMensaje, fecha: getDate(), hora: transformHours(), name: user.name }
     sockect.emit('mensaje_normal', mensajeEnviar)
     setNuevoMensaje('')
