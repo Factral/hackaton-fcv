@@ -23,18 +23,18 @@ export default function MyChat () {
   const [mensaje, setMensaje] = useState('')
   const [mensajes, setMensajes] = useState([])
   const { user } = UserStore(state => state, shallow)
+
+  sockect.on('connect', () => {
+    setIsConnected(true)
+  })
+  const getMessages = (conversacion) => {
+    console.log('Render dese la conversacion')
+    setMensajes(conversacion.mensajes)
+  }
+  sockect.on('obtener_conversacion', getMessages)
+
   useEffect(() => {
-    sockect.on('connect', () => {
-      setIsConnected(true)
-    })
-
-    sockect.on('obtener_conversacion', (conversacion) => {
-      console.log('Render dese la conversacion')
-      setMensajes(conversacion.mensajes)
-    })
-
-    sockect.emit('obtener_conversacion', { userId: user.id, destinatario })
-
+    sockect.emit('obt        ener_conversacion', { userId: user.id, destinatario })
     return () => {
       sockect.off('connect')
       sockect.off('obtener_conversacion')
