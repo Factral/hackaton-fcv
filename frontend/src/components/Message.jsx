@@ -3,8 +3,7 @@ import { shallow } from 'zustand/shallow'
 
 export default function Message ({ message }) {
   const { user } = UserStore(store => store, shallow)
-  console.log({ user })
-  const { userId, fecha, mensaje, hora, name } = message
+  const { userId, mensaje, hora, name } = message
   const isMyMessage = userId === user.id
   return (
     <div className={`flex items-end justify-between rounded-xl gap-4 w-fit min-w-[250px] max-w-xl p-5 ${isMyMessage ? 'my-class' : 'other-class'}`}>

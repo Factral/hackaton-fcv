@@ -1,6 +1,37 @@
+require('dotenv').config()
 const http = require('http')
-
+const mongoose = require('mongoose')
 const server = http.createServer()
+try {
+
+  mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+  console.log('conectado a la base de datos')
+}catch (error) {
+  console.log(error)
+}
+
+const mensajeSchema = new mongoose.Schema({
+  userName: String,
+  userId: String,
+  destinatario: String,
+  mensaje: String,
+  fecha: String,
+  hora: String
+});
+
+const conversationSchema = new mongoose.Schema({
+  usuario: String,
+  destinatario: String,
+  mensajes: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Mensaje'
+  }],
+  fecha: Date,
+})
+
+const Mensaje = mongoose.model('Mensaje', mensajeSchema);
+
+const Conversation = mongoose.model('Conversation', conversationSchema);
 
 const io = require('socket.io')(server, {
   cors: { origin:'*'}
@@ -8,12 +39,51 @@ const io = require('socket.io')(server, {
 
 io.on('connection', (socket) => {
   console.log('se ha conectado un cliente')
-  console.log(socket)
-  socket.on('mensaje_normal', (data) => {
-    io.emit('mensaje_normal', data)
+
+  socket.on('mensaje', async (data) => {
+    // Creo el mensaje en la db
+    try {
+      const mensaje = new Mensaje(data)
+      socket.emit('mensaje', mensaje._id)
+      const mensajeGuardado = await mensaje.save()
+      // Busco la conversacion en la db
+      const conversation = await Conversation.findOne({
+        usuario: data.userId,
+        destinatario: data.destinatario,
+      });
+
+      if(conversation == null) {
+        // si no existe la conversacion, la creo
+        const newConversation = new Conversation({
+          usuario: data.userId,
+          destinatario: data.destinatario,
+          mensajes: [],
+          fecha: new Date(),
+        });
+        newConversation.mensajes = newConversation.mensajes.concat(mensajeGuardado._id);
+        await newConversation.save();
+        return
+      }
+      // si existe la conversacion, agrego el mensaje
+      conversation.mensajes = conversation.mensajes.concat(mensajeGuardado._id)
+      await conversation.save()
+    } catch (error) {
+      console.log(error)
+    }
+  })
+
+  socket.on('obtener_conversacion', async (data) => {
+    try {
+      const conversation = await Conversation.findOne({
+        usuario: data.userId,
+        destinatario: data.destinatario,
+      }).populate('mensajes')
+      socket.emit("obtener_conversacion", conversation);
+    } catch (error) {
+      console.log(error)
+    }
   })
 })
-
 server.listen(3000, () => {
   console.log('servidor escuchando en el puerto http://localhost:3000')
 })
