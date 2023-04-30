@@ -85,7 +85,8 @@ def update_pwd():
 @profile.route('/profile/add_role', methods=['POST'])
 @login_required
 def add_role():
-    
+    #roles can be 'patient' or 'carer'
+    #carer can have access to patient data
     new_role = request.json['role']
     
     if current_user.role == new_role:
@@ -102,3 +103,27 @@ def add_role():
             
     return jsonify({'message': 'Rol actualizado'}), 200
 
+#set patient if user is carer
+@profile.route('/profile/set_patient', methods=['POST'])
+@login_required
+def set_patient():
+    patient_id = request.json['patient_id']
+    
+    if 'carer' not in current_user.role:
+        return jsonify({'message': 'No tienes permisos para realizar esta acción', 'error': True}), 400
+    
+    patient = db_person.find_one({'_id': ObjectId(patient_id)})
+    
+    if not patient:
+        return jsonify({'message': 'El paciente no existe', 'error': True}), 400
+    
+    carer = db_person.find_one({'_id': ObjectId(current_user.username)})
+
+    if 'patients' in carer:
+        new_patient = [patient_id, *carer['patients']]
+    else:
+        new_patient = [patient_id]
+
+    db_person.update_one({'_id': ObjectId(current_user.username)}, {'$set': {'patients': new_patient} })
+            
+    return jsonify({'message': 'Paciente asignado'}), 200
