@@ -29,9 +29,14 @@ def profile_():
         'document': user.document
     }
 
-    carer = db_person.find_one({'_id': ObjectId(user.username)})
 
-    user_dict['patients'] = carer['patients']
+
+    if carer['role'] == 'carer':
+        carer = db_person.find_one({'_id': ObjectId(user.username)})
+        if patiens not in carer:
+            user_dict['patients'] = []
+        else:
+            user_dict['patients'] = carer['patients']
 
     return jsonify({'message': user_dict}), 200
 
