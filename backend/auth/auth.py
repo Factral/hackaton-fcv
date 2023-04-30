@@ -48,12 +48,39 @@ def login_post():
         if "patients" not in person:
             user_dict['patients'] = []
         else:
-            user_dict['patients'] = person['patients']
+            user_dict['patients'] = []
+            if isinstance(person['patients'], list):
+      
+                for patient in person['patients']:
+                    patient_ = db_person.find_one({'_id': ObjectId(patient)})
+                    user_dict['patients'].append({
+                        'id': str(patient_['_id']),
+                        'name': patient_['name'],
+                    })
+            else:
+                patient_ = db_person.find_one({'_id': ObjectId(person['patients'])})
+                user_dict['patients'].append({
+                    'id': str(patient_['_id']),
+                    'name': patient_['name'],
+                })
     elif person['role'] == 'patient':
         if "carer" not in person:
             user_dict['carer'] = []
         else:
-            user_dict['carer'] = [person['carer']]
+            user_dict['carer'] = []
+            if isinstance(person['carer'], list):
+                for carer in person['carer']:
+                    carer_ = db_person.find_one({'_id': ObjectId(carer)})
+                    user_dict['carer'].append({
+                        'id': str(carer_['_id']),
+                        'name': carer_['name'],
+                    })
+            else:
+                carer_ = db_person.find_one({'_id': ObjectId(person['carer'])})
+                user_dict['carer'].append({
+                    'id': str(carer_['_id']),
+                    'name': carer_['name'],
+                })
 
 
     print(encode_cookie(str(session["_user_id"])))
