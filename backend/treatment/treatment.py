@@ -71,8 +71,9 @@ def treatment_get():
 
         medicines_ = []
         for medicine in medicines:
-            print(medicine)
             medicine_ = db_medicine.find_one({'_id': ObjectId(medicine)})
+            if medicine_ is None:
+                continue
             medicines_.append({
                 "name": medicine_['name'],
                 "quantity": medicine_['quantity'],
