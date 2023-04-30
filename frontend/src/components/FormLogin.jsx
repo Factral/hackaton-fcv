@@ -31,7 +31,7 @@ export default function FormLogin () {
           </div>
           <div className='flex w-full space-between'>
             <Input register={register} validation={validationLogin} errors={errors} label='Recordarme' nameRegister='remember' typeInput='checkbox' editStyle='flex gap-3' />
-            <NavLink to='/auth/register' className='text-right w-full text-white underline transition-all ease-in-out duration-300 hover:text-main-white md:text-lg'>No tienes cuenta? Regístrate.</NavLink>
+            <NavLink to='/auth/register' className='text-right w-fit ml-auto text-white underline transition-all ease-in-out duration-300 hover:text-main-white md:text-lg'>No tienes cuenta? Regístrate.</NavLink>
           </div>
           <MainButton type='submit'>INGRESAR</MainButton>
         </div>

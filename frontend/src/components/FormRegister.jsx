@@ -45,7 +45,7 @@ export default function FormRegister () {
             </div>
           </div>
           <div className='flex w-full space-between'>
-            <NavLink to='/auth/login' className='text-left w-full text-white underline transition-all ease-in-out duration-300 hover:text-main-white md:text-lg'>Ya tienes cuenta? Ingresa con ella.</NavLink>
+            <NavLink to='/auth/login' className='text-left w-fit text-white underline transition-all ease-in-out duration-300 hover:text-main-white md:text-lg'>Ya tienes cuenta? Ingresa con ella.</NavLink>
           </div>
           <MainButton type='submit'>REGISTRARSE</MainButton>
         </div>
