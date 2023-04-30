@@ -9,10 +9,6 @@ export default function fetchLogin (data) {
     body: JSON.stringify(data)
   })
     .then(res => {
-      console.log(res)
-      for (const pair of res.headers.entries()) {
-        console.log(pair[0] + ': ' + pair[1])
-      }
       return res.json()
     })
     .catch(err => console.log({ err }))

@@ -34,7 +34,7 @@ export default function MyChat () {
   sockect.on('obtener_conversacion', getMessages)
 
   useEffect(() => {
-    sockect.emit('obt        ener_conversacion', { userId: user.id, destinatario })
+    sockect.emit('obtener_conversacion', { userId: user.id, destinatario })
     return () => {
       sockect.off('connect')
       sockect.off('obtener_conversacion')
