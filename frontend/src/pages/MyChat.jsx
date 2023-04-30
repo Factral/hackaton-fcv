@@ -9,7 +9,7 @@ import UserStore from '../store/UserStore'
 import { shallow } from 'zustand/shallow'
 import { useParams } from 'react-router-dom'
 
-const sockect = io('http://10.32.34.79:3000')
+const sockect = io('http://localhost:3000')
 
 function getDate () {
   return new Date().toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long' })
