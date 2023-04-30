@@ -10,6 +10,7 @@ import Layout from './components/Layout'
 import MyChat from './pages/MyChat'
 import VerifyUserLogued from './security/VerifyUserLogued'
 import useCloseAlert from './hooks/useCloseAlert'
+import Listchat from './pages/Listchat'
 
 function App () {
   useCloseAlert()
@@ -22,7 +23,8 @@ function App () {
         </Route>
         <Route path='/' element={<VerifyUserLogued><Layout /></VerifyUserLogued>}>
           <Route path='home' element={<Formula />} />
-          <Route path='chat' element={<MyChat />} />
+          <Route path='chat' element={<Listchat />} />
+          <Route path='chat/:destinatario' element={<MyChat />} />
         </Route>
       </Routes>
       <AlertComponent />
