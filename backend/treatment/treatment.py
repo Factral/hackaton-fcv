@@ -27,7 +27,7 @@ def treatment_set():
 
 
 @treatment.route('/treatments', methods=['POST'])
-@login_required
+#@login_required
 def treatment_get():
     if 'session' not in request.json:
         return jsonify({'message': 'No hay session', 'error': True}), 400
