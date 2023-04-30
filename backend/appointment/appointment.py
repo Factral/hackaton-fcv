@@ -6,7 +6,7 @@ from datetime import datetime, time, timedelta
 from apscheduler.schedulers.background import BackgroundScheduler, BlockingScheduler
 from datetime import datetime
 from flask_mail import Message, Mail
-from pywhatkit import  *
+
 
 
 appointment = Blueprint('appointment', __name__)
@@ -43,12 +43,48 @@ def appointment_post():
     hour = time_final.hour
     minute = time_final.minute
     second = time_final.second
+    user = current_user
+    
+    query = {"patients": {"$in": [ObjectId(user.username)]}}
+    carer = db_person.find_one(query)
+    
+    print(carer) 
+    
+    
+    message = "Tienes una cita médica de "+name+" programada para el día " + date + " a las " + time + " con el profesional " + professional + " en la dirección " + address + "."
+    mail = Mail()
+    msg = Message('Cita médica',
+                        sender="noreply@gmail.com",
+                        recipients=[user.email],
+                        body=message)
+    mail.send(msg)
+    
+    
+    
+    def send_whatsapp(message,phone):
+        from datetime import datetime
+        import pywhatkit as pwk
+        
+        print(phone)
+        
+        current_time = datetime.now()
+        current_hour = current_time.hour
+        current_minute = current_time.minute + 1
+        pwk.sendwhatmsg('+57 '+phone,message,current_hour,current_minute,20,True,2)
+        
+    scheduler1 = BackgroundScheduler()
+    scheduler1.add_job(send_whatsapp, 'date', run_date=datetime.now(),args=[message,user.phone])
+    scheduler1.start()
+        
+        
     
 
     
-    def job(email):
+    def job(email,phone):
         from flask import Flask
         from flask_mail import Message, Mail
+        from datetime import datetime
+        import pywhatkit as pwk
         app = Flask(__name__)
         app.config['MAIL_SERVER']='sandbox.smtp.mailtrap.io'
         app.config['MAIL_PORT'] = 2525
@@ -56,21 +92,24 @@ def appointment_post():
         app.config['MAIL_PASSWORD'] = '0e1df819bdbc13'
         app.config['MAIL_USE_TLS'] = True
         app.config['MAIL_USE_SSL'] = False
-        mail = Mail(app)
-        print("Job running")
-        msg = Message('Cita médica',
+        mailer = Mail(app)
+        
+        msg = "En 30 minutos tienes una cita médica de "+ name +" programada en la dirección " + address + "."
+        message = Message('Cita médica',
                         sender="noreply@gmail.com",
                         recipients=[email],
-                        body="Tienes una cita médica programada para el día " + date + " a las " + time + " con el profesional " + professional + " en la dirección " + address + ".")
-        mail = Mail(app)
+                        body=msg)
+        mailer = Mail(app)
         with app.app_context():
-            mail.send(msg)
-        print("Job finished")
+            mailer.send(message)
+        current_time = datetime.now()
+        current_hour = current_time.hour
+        current_minute = current_time.minute + 1
+        pwk.sendwhatmsg('+57 '+phone,msg,current_hour,current_minute,20,True,2)
     
-    user = current_user
         
     scheduler = BackgroundScheduler()
-    scheduler.add_job(job, 'date', run_date=datetime(year, month, day, hour, minute, second), args=[user.email])
+    scheduler.add_job(job, 'date', run_date=datetime(year, month, day, hour, minute, second), args=[user.email,user.phone])
     scheduler.start()
 
     db_appointment.insert_one(new_appointment)
@@ -88,76 +127,3 @@ def appointments_by_user(id):
         appointment['user_id'] = str(appointment['user_id'])
         appointments_list.append(appointment)
     return jsonify(appointments_list), 200
-
-@appointment.route('/appointment/<id>', methods=['PUT'])
-@login_required
-def appointment_put(id):
-    name = request.json['name']
-    date = request.json['date']
-    time = request.json['time']
-    address = request.json['address']
-    description = request.json['description']
-    professional = request.json['professional']
-    user = current_user
-    
-    if date != user.date or time != user.time  or address != user.address or professional != user.professional:
-        format_date = datetime.strptime(date, '%Y-%m-%d')
-        year = format_date.year
-        month = format_date.month
-        day = format_date.day
-        
-        format_time = datetime.strptime(time, '%H:%M:%S')
-        time_final = format_time - timedelta(minutes=30)
-        hour = time_final.hour
-        minute = time_final.minute
-        second = time_final.second
-        
-        def job(email):
-            from flask import Flask
-            from flask_mail import Message, Mail
-            app = Flask(__name__)
-            app.config['MAIL_SERVER']='sandbox.smtp.mailtrap.io'
-            app.config['MAIL_PORT'] = 2525
-            app.config['MAIL_USERNAME'] = '394719e4247eba'
-            app.config['MAIL_PASSWORD'] = '0e1df819bdbc13'
-            app.config['MAIL_USE_TLS'] = True
-            app.config['MAIL_USE_SSL'] = False
-            mail = Mail(app)
-            msg = Message('Actualizacion de cita médica',
-                            sender="noreply@gmail.com",
-                            recipients=[email],
-                            body="Se ha actualizado tu cita médica para el día " + date + " a las " + time + " con el profesional " + professional + " en la dirección " + address + ".")
-            mail = Mail(app)
-            with app.app_context():
-                mail.send(msg)
-        
-        user = current_user
-            
-        scheduler = BackgroundScheduler()
-        scheduler.add_job(job, 'date', run_date=datetime(year, month, day, hour, minute, second), args=[user.email])
-        scheduler.start()
-        
-    
-    updated_appointment = {
-        '$set': {
-            'name': name,
-            'date': date,
-            'time': time,
-            'professional': professional,
-            'description': description,
-            'address': address,
-            'status': 'active'
-        }
-    }
-    
-    db_appointment.update_one({'_id': ObjectId(id)}, updated_appointment)
-    
-    return jsonify({'message': 'Cita actualizada'}), 200
-
-
-            
-
-
-    
-    
-

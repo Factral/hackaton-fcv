@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import fetchGetUser from '../services/fetchGetUser'
 import fetchLogin from '../services/fetchLogin'
 import UserStore from '../store/UserStore'
 import { shallow } from 'zustand/shallow'
@@ -7,10 +6,11 @@ import AlertStore from '../store/AlertStore'
 import fetchLogout from '../services/fetchLogout'
 import { useNavigate } from 'react-router-dom'
 import fetchSignUp from '../services/fetchSignUp'
+import fetchGetTreatmetns from '../services/fetchGetTreatments'
 
 export default function useUser () {
   const { setUser, resetUser } = UserStore((state) => state, shallow)
-  const { successAlert, errorAlert } = AlertStore((state) => state, shallow)
+  const { successAlert, errorAlert, infoAlert } = AlertStore((state) => state, shallow)
   const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
 
@@ -47,17 +47,21 @@ export default function useUser () {
     navigate('/home')
   }
 
+  const getTreatments = async (session) => {
+    setLoading(true)
+    const response = await fetchGetTreatmetns(session)
+    setLoading(false)
+    console.log({ response })
+    return response
+  }
+
   const logOut = async () => {
     setLoading(true)
     const response = await fetchLogout()
     console.log({ response })
-    const message = response?.message || 'Sesión terminada'
-    if (response?.error) {
-      setLoading(false)
-      errorAlert(message)
-      return
-    }
-
+    const message = 'Sesión terminada'
+    localStorage.removeItem('user')
+    infoAlert(message)
     setLoading(false)
     resetUser()
     navigate('/auth/login')
@@ -67,6 +71,7 @@ export default function useUser () {
     logIn,
     logOut,
     loading,
-    signUp
+    signUp,
+    getTreatments
   }
 }

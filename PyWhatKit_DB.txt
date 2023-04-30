@@ -1,0 +1,70 @@
+Date: 30/4/2023
+Time: 3:28
+Phone Number: +57 313 3985089
+Message: sdasdasdsa
+--------------------
+Date: 30/4/2023
+Time: 3:29
+Phone Number: +57 313 3985089
+Message: sdasdasdsa
+--------------------
+Date: 30/4/2023
+Time: 3:34
+Phone Number: +57 313 3985089
+Message: sdasdasdsa
+--------------------
+Date: 30/4/2023
+Time: 3:40
+Phone Number: +57 313 3985089
+Message: Tienes una cita médica programada para el día 2023-04-30 a las 04:06:00 con el profesional lorem en la dirección lorem ipsum.
+--------------------
+Date: 30/4/2023
+Time: 3:45
+Phone Number: +57 3147971945
+Message: Tienes una cita médica programada para el día 2023-04-30 a las 04:16:00 con el profesional lorem en la dirección lorem ipsum.
+--------------------
+Date: 30/4/2023
+Time: 4:1
+Phone Number: +57 3147971945
+Message: En 30 minutos tienes una cita médica programada en la dirección lorem ipsum.
+--------------------
+Date: 30/4/2023
+Time: 4:3
+Phone Number: +57 3147971945
+Message: Tienes una cita médica programada para el día 2023-04-30 a las 04:37:00 con el profesional lorem en la dirección lorem ipsum.
+--------------------
+Date: 30/4/2023
+Time: 4:9
+Phone Number: +57 3147971945
+Message: Tienes una cita médica programada para el día 2023-04-30 a las 04:45:00 con el profesional lorem en la dirección lorem ipsum.
+--------------------
+Date: 30/4/2023
+Time: 4:15
+Phone Number: +57 3147971945
+Message: En 30 minutos tienes una cita médica programada en la dirección lorem ipsum.
+--------------------
+Date: 30/4/2023
+Time: 5:7
+Phone Number: +57 3133985089
+Message: Tienes una cita médica programada para el día 2023-04-30 a las 05:40:00 con el profesional lorem en la dirección lorem ipsum.
+--------------------
+Date: 30/4/2023
+Time: 5:11
+Phone Number: +57 3133985089
+Message: Tienes una cita médica programada para el día 2023-04-30 a las 05:45:00 con el profesional lorem en la dirección lorem ipsum.
+--------------------
+Date: 30/4/2023
+Time: 5:15
+Phone Number: +57 3133985089
+Message: En 30 minutos tienes una cita médica programada en la dirección lorem ipsum.
+--------------------
+Date: 30/4/2023
+Time: 5:33
+Phone Number: +57 3133985089
+Message: Tienes una cita médica de Medicina General2 programada para el día 2023-04-30 a las 06:07:00 con el profesional lorem en la dirección lorem ipsum.
+--------------------
+Date: 30/4/2023
+Time: 5:37
+Phone Number: +57 3133985089
+Message: En 30 minutos tienes una cita médica de Medicina General2 programada en la dirección lorem ipsum.
+--------------------

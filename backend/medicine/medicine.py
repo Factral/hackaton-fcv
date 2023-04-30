@@ -1,24 +1,25 @@
 from flask import Blueprint, request, jsonify
 from flask_login import login_required, current_user
-from .. import db_person, db_medicine, db_treatment
+from .. import db_person, db_medicine, db_treatment, login_manager
 from bson.objectid import ObjectId
+from flask_login.utils import encode_cookie, decode_cookie
 
 medicine = Blueprint('medicine', __name__)
 
 
 #crear nueva medicina
 @medicine.route('/medicine', methods=['POST'])
-@login_required
+#@login_required
 def medicine_post():
     name = request.json['name']
     quantity = request.json['quantity']
     start_hour = request.json['start_hour']
     frequency = request.json['frequency']
     start_amount = request.json['start_amount']
-    id = request.json['treatment_id']
+    treatment_id = request.json['treatment_id']
     
     new_medicine = {
-        'treatment_id': ObjectId(id),
+        'treatment_id': ObjectId(treatment_id),
         'name': name,
         'quantity': quantity,
         'start_hour': start_hour or None,
@@ -35,7 +36,7 @@ def medicine_post():
 
 #obtener medicinas de un tratamiento dado por id
 @medicine.route('/<id>/medicine', methods=['GET'])
-@login_required
+#@login_required
 def medicine_get(id):
     medicines = db_treatment.find_one({'_id': ObjectId(id)})
     medicines_list = []
@@ -46,7 +47,7 @@ def medicine_get(id):
 
 #actualizar hora de inicio
 @medicine.route('/medicine/started_hour/<id>', methods=['PUT'])
-@login_required
+#@login_required
 def medicine_started_hour(id):
     start_hour = request.json['start_hour']
     updated_medicine = {
@@ -61,7 +62,7 @@ def medicine_started_hour(id):
 
 #descontar medicina
 @medicine.route('/medicine/discount/<id>', methods=['PUT'])
-@login_required
+#@login_required
 def medicine_discount(id):
     medicine = db_medicine.find_one({'_id': ObjectId(id)})
     medicine['amount'] = medicine['amount'] - 1
@@ -80,7 +81,7 @@ def medicine_discount(id):
 
 #delete medicine
 @medicine.route('/medicine/<id>', methods=['DELETE'])
-@login_required
+#@login_required
 def medicine_delete(id):
     db_medicine.delete_one({'_id': ObjectId(id)})
     return jsonify({'message': 'Medicina eliminada'}), 200
@@ -88,7 +89,7 @@ def medicine_delete(id):
 
 #update medicine
 @medicine.route('/medicine/<id>', methods=['PUT'])
-@login_required
+#@login_required
 def medicine_edit(id):
     name = request.json['name']
     quantity = request.json['quantity']
@@ -115,7 +116,7 @@ def medicine_edit(id):
 
 # get medicine info
 @medicine.route('/medicine/<id>', methods=['GET'])
-@login_required
+#@login_required
 def medicine_info(id):
     medicine = db_medicine.find_one({'_id': ObjectId(id)})
     info = {
