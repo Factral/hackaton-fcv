@@ -198,3 +198,13 @@ Time: 11:25
 Phone Number: +57 3133985089
 Message: En 30 minutos tienes una cita médica de Medicina General2 programada en la dirección lorem ipsum.
 --------------------
+Date: 30/4/2023
+Time: 11:47
+Phone Number: +57 3133985089
+Message: El paciente Sebastian Fernando Garcia Delgado tiene una cita médica de Medicina General programada para el día 2023-04-30 a las 12:19:00 con el profesional Dr. Palomino Cardenas en la dirección Calle 155A No. 23 - 58, Floridablanca, Santander.
+--------------------
+Date: 30/4/2023
+Time: 11:49
+Phone Number: +57 3133985089
+Message: En 30 minutos tienes una cita médica de Medicina General programada en la dirección Calle 155A No. 23 - 58, Floridablanca, Santander.
+--------------------
