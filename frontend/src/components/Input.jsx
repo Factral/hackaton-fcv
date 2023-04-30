@@ -6,7 +6,7 @@ export default function Input ({ editStyle, label, typeInput, nameRegister, regi
   return (
     <div className={editStyle || 'flex flex-col'}>
       <label htmlFor={nameRegister} className={`font-medium md:text-lg ${errorInput ? 'text-red-500' : 'text-white'}`}>{label}</label>
-      <input type={typeInput} placeholder={placeholder} className={`p-3 rounded-2xl outline-none main-shadow border-2 text-sm font-medium md:text-lg ${errorInput ? 'border-red-500' : 'border-transparent focus:border-main-green-500'}`} {...register(nameRegister, validate)} {...props} />
+      <input type={typeInput} id={nameRegister} placeholder={placeholder} className={`p-3 rounded-2xl outline-none main-shadow border-2 text-sm font-medium md:text-lg ${errorInput ? 'border-red-500' : 'border-transparent focus:border-main-green-500'}`} {...register(nameRegister, validate)} {...props} />
       {errorInput && <span className='text-sm text-red-500 mt-1 md:text-base'>{messages[errorInput.type]}</span>}
     </div>
   )
