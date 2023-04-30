@@ -1,0 +1,28 @@
+.main-shadow {
+  filter: drop-shadow(-3px 3px #0FC141);
+}
+
+.main-shadow-text {
+  text-shadow: #0FC141 -3px 3px;
+}
+
+.clean-scroll::-webkit-scrollbar {
+  width: 6px;
+  border-radius: 20px;
+  background: transparent;
+}
+
+.clean-scroll::-webkit-scrollbar-thumb {
+  width: 6px;
+  background: transparent;
+}
+
+.show-scroll:hover::-webkit-scrollbar {
+  width: 6px;
+  background: #C2E9D8;
+}
+
+.show-scroll:hover::-webkit-scrollbar-thumb {
+  background: #52f07f8a;
+  border-radius: 30px;
+}
