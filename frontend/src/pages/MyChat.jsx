@@ -21,7 +21,7 @@ export default function MyChat () {
   const [mensaje, setMensaje] = useState('')
   const [mensajes, setMensajes] = useState([])
   const { user } = UserStore(state => state, shallow)
-
+console.log({user})
   useEffect(() => {
     sockect.on('connect', () => {
       setIsConnected(true)
