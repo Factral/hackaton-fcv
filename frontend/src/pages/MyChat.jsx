@@ -7,6 +7,7 @@ import Message from '../components/Message'
 import { LoadingComponent } from '../components/Loading'
 import UserStore from '../store/UserStore'
 import { shallow } from 'zustand/shallow'
+import { useParams } from 'react-router-dom'
 
 const sockect = io('http://localhost:3000')
 
@@ -15,6 +16,7 @@ function getDate () {
 }
 
 export default function MyChat () {
+  const { destinatario } = useParams()
   const ref = useRef(null)
   const [isConnected, setIsConnected] = useState(false)
   const [last, setLast] = useState(null)
@@ -31,7 +33,7 @@ export default function MyChat () {
       setMensajes(conversacion.mensajes)
     })
 
-    sockect.emit('obtener_conversacion', { userId: user.id, destinatario: '644e0792f269e1d3add9c304' })
+    sockect.emit('obtener_conversacion', { userId: user.id, destinatario })
 
     return () => {
       sockect.off('connect')
@@ -49,16 +51,17 @@ export default function MyChat () {
 
   const handleSubmit = (e) => {
     e.preventDefault()
+    if (!mensaje.trim()) return
     const mensajeEnviar = {
       userName: user.name,
       userId: user.id,
-      destinatario: '644e0792f269e1d3add9c304',
+      destinatario,
       mensaje,
       fecha: getDate(),
       hora: transformHours()
     }
     sockect.emit('mensaje', mensajeEnviar)
-    sockect.emit('obtener_conversacion', { userId: user.id, destinatario: '644e0792f269e1d3add9c304' })
+    sockect.emit('obtener_conversacion', { userId: user.id, destinatario })
     setLast(mensajeEnviar)
     setMensaje('')
   }

@@ -28,6 +28,20 @@ def profile_():
         'gender': user.gender,
         'document': user.document
     }
+
+    person = db_person.find_one({'_id': ObjectId(user.username)})
+
+    if person['role'] == 'carer':
+        if "patients" not in person:
+            user_dict['patients'] = []
+        else:
+            user_dict['patients'] = person['patients']
+    elif person['role'] == 'patient':
+        if "carer" not in person:
+            user_dict['carer'] = []
+        else:
+            user_dict['carer'] = [person['carer']]
+
     return jsonify({'message': user_dict}), 200
 
 @profile.route('/profile/edit', methods=['PUT'])
@@ -136,7 +150,7 @@ def set_patient():
     session = request.json['session']
     b = decode_cookie(str(session))
     current_user = login_manager._user_callback(b)
-
+    print(current_user.role)
     if 'carer' not in current_user.role:
         return jsonify({'message': 'No tienes permisos para realizar esta acción', 'error': True}), 400
     
@@ -144,6 +158,8 @@ def set_patient():
     
     if not patient:
         return jsonify({'message': 'El paciente no existe', 'error': True}), 400
+    
+    db_person.update_one({'_id': ObjectId(patient_id)}, {'$set': {'carer': current_user.username}})
     
     carer = db_person.find_one({'_id': ObjectId(current_user.username)})
 
