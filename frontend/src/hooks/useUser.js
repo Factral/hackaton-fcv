@@ -47,9 +47,9 @@ export default function useUser () {
     navigate('/home')
   }
 
-  const getTreatments = async () => {
+  const getTreatments = async (session) => {
     setLoading(true)
-    const response = await fetchGetTreatmetns()
+    const response = await fetchGetTreatmetns(session)
     setLoading(false)
     console.log({ response })
     return response
@@ -59,12 +59,7 @@ export default function useUser () {
     setLoading(true)
     const response = await fetchLogout()
     console.log({ response })
-    const message = response?.message || 'Sesión terminada'
-    if (response?.error) {
-      setLoading(false)
-      errorAlert(message)
-      return
-    }
+    const message = 'Sesión terminada'
     localStorage.removeItem('user')
     infoAlert(message)
     setLoading(false)
