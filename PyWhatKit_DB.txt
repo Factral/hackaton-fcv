@@ -68,3 +68,143 @@ Time: 5:37
 Phone Number: +57 3133985089
 Message: En 30 minutos tienes una cita médica de Medicina General2 programada en la dirección lorem ipsum.
 --------------------
+Date: 30/4/2023
+Time: 6:23
+Phone Number: +57 3133985089
+Message: Tienes una cita médica de Medicina General2 programada para el día 2023-04-30 a las 06:55:00 con el profesional lorem en la dirección lorem ipsum.
+--------------------
+Date: 30/4/2023
+Time: 6:25
+Phone Number: +57 3133985089
+Message: Tienes una cita médica de Medicina General2 programada para el día 2023-04-30 a las 06:57:00 con el profesional lorem en la dirección lorem ipsum.
+--------------------
+Date: 30/4/2023
+Time: 6:26
+Phone Number: +57 3133985089
+Message: Tienes una cita médica de Medicina General2 programada para el día 2023-04-30 a las 06:58:00 con el profesional lorem en la dirección lorem ipsum.
+--------------------
+Date: 30/4/2023
+Time: 6:27
+Phone Number: +57 3133985089
+Message: En 30 minutos tienes una cita médica de Medicina General2 programada en la dirección lorem ipsum.
+--------------------
+Date: 30/4/2023
+Time: 9:51
+Phone Number: +57 3133985089
+Message: Tienes una cita médica de Medicina General2 programada para el día 2023-04-30 a las 10:25:00 con el profesional lorem en la dirección lorem ipsum.
+--------------------
+Date: 30/4/2023
+Time: 10:0
+Phone Number: +57 3133985089
+Message: Tienes una cita médica de Medicina General2 programada para el día 2023-04-30 a las 10:31:00 con el profesional lorem en la dirección lorem ipsum.
+--------------------
+Date: 30/4/2023
+Time: 10:1
+Phone Number: +57 3133985089
+Message: Tienes una cita médica de Medicina General2 programada para el día 2023-04-30 a las 10:33:00 con el profesional lorem en la dirección lorem ipsum.
+--------------------
+Date: 30/4/2023
+Time: 10:3
+Phone Number: +57 3133985089
+Message: En 30 minutos tienes una cita médica de Medicina General2 programada en la dirección lorem ipsum.
+--------------------
+Date: 30/4/2023
+Time: 10:5
+Phone Number: +57 3133985089
+Message: Tienes una cita médica de Medicina General2 programada para el día 2023-04-30 a las 10:37:00 con el profesional lorem en la dirección lorem ipsum.
+--------------------
+Date: 30/4/2023
+Time: 10:7
+Phone Number: +57 3133985089
+Message: En 30 minutos tienes una cita médica de Medicina General2 programada en la dirección lorem ipsum.
+--------------------
+Date: 30/4/2023
+Time: 10:23
+Phone Number: +57 3133985089
+Message: Tienes una cita médica de Medicina General2 programada para el día 2023-04-30 a las 10:55:00 con el profesional lorem en la dirección lorem ipsum.
+--------------------
+Date: 30/4/2023
+Time: 10:25
+Phone Number: +57 3133985089
+Message: En 30 minutos tienes una cita médica de Medicina General2 programada en la dirección lorem ipsum.
+--------------------
+Date: 30/4/2023
+Time: 10:30
+Phone Number: +57 3133985089
+Message: En 30 minutos tienes una cita médica de Medicina General2 programada en la dirección lorem ipsum.
+--------------------
+Date: 30/4/2023
+Time: 10:36
+Phone Number: +57 3133985089
+Message: El paciente Sebastian Fernando Garcia Delgado tiene una cita médica de Medicina General2 programada para el día 2023-04-30 a las 11:08:00 con el profesional lorem en la dirección lorem ipsum.
+--------------------
+Date: 30/4/2023
+Time: 10:37
+Phone Number: +57 3133985089
+Message: El paciente Sebastian Fernando Garcia Delgado tiene una cita médica de Medicina General2 programada para el día 2023-04-30 a las 11:08:00 con el profesional lorem en la dirección lorem ipsum.
+--------------------
+Date: 30/4/2023
+Time: 10:38
+Phone Number: +57 3133985089
+Message: En 30 minutos tienes una cita médica de Medicina General2 programada en la dirección lorem ipsum.
+--------------------
+Date: 30/4/2023
+Time: 10:41
+Phone Number: +57 3133985089
+Message: El paciente Sebastian Fernando Garcia Delgado tiene una cita médica de Medicina General2 programada para el día 2023-04-30 a las 11:13:00 con el profesional lorem en la dirección lorem ipsum.
+--------------------
+Date: 30/4/2023
+Time: 10:43
+Phone Number: +57 3133985089
+Message: En 30 minutos tienes una cita médica de Medicina General2 programada en la dirección lorem ipsum.
+--------------------
+Date: 30/4/2023
+Time: 10:42
+Phone Number: +57 3133985089
+Message: El paciente Sebastian Fernando Garcia Delgado tiene una cita médica de Medicina General2 programada para el día 2023-04-30 a las 11:13:00 con el profesional lorem en la dirección lorem ipsum.
+--------------------
+Date: 30/4/2023
+Time: 11:1
+Phone Number: +57 3133985089
+Message: El paciente Sebastian Fernando Garcia Delgado tiene una cita médica de Medicina General2 programada para el día 2023-04-30 a las 11:31:00 con el profesional lorem en la dirección lorem ipsum.
+--------------------
+Date: 30/4/2023
+Time: 11:1
+Phone Number: +57 3133985089
+Message: El paciente Sebastian Fernando Garcia Delgado tiene una cita médica de Medicina General2 programada para el día 2023-04-30 a las 11:38:00 con el profesional lorem en la dirección lorem ipsum.
+--------------------
+Date: 30/4/2023
+Time: 11:7
+Phone Number: +57 3133985089
+Message: El paciente Sebastian Fernando Garcia Delgado tiene una cita médica de Medicina General2 programada para el día 2023-04-30 a las 11:40:00 con el profesional lorem en la dirección lorem ipsum.
+--------------------
+Date: 30/4/2023
+Time: 11:16
+Phone Number: +57 3133985089
+Message: El paciente Sebastian Fernando Garcia Delgado tiene una cita médica de Medicina General2 programada para el día 2023-04-30 a las 11:47:00 con el profesional lorem en la dirección lorem ipsum.
+--------------------
+Date: 30/4/2023
+Time: 11:17
+Phone Number: +57 3133985089
+Message: En 30 minutos tienes una cita médica de Medicina General2 programada en la dirección lorem ipsum.
+--------------------
+Date: 30/4/2023
+Time: 11:21
+Phone Number: +57 3133985089
+Message: El paciente Sebastian Fernando Garcia Delgado tiene una cita médica de Medicina General2 programada para el día 2023-04-30 a las 11:55:00 con el profesional lorem en la dirección lorem ipsum.
+--------------------
+Date: 30/4/2023
+Time: 11:25
+Phone Number: +57 3133985089
+Message: En 30 minutos tienes una cita médica de Medicina General2 programada en la dirección lorem ipsum.
+--------------------
+Date: 30/4/2023
+Time: 11:47
+Phone Number: +57 3133985089
+Message: El paciente Sebastian Fernando Garcia Delgado tiene una cita médica de Medicina General programada para el día 2023-04-30 a las 12:19:00 con el profesional Dr. Palomino Cardenas en la dirección Calle 155A No. 23 - 58, Floridablanca, Santander.
+--------------------
+Date: 30/4/2023
+Time: 11:49
+Phone Number: +57 3133985089
+Message: En 30 minutos tienes una cita médica de Medicina General programada en la dirección Calle 155A No. 23 - 58, Floridablanca, Santander.
+--------------------
