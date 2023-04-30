@@ -19,7 +19,7 @@ function App () {
           <Route path='register' element={<Register />} />
         </Route>
         <Route path='/' element={<VerifyUserLogued><Layout /></VerifyUserLogued>}>
-          <Route index element={<Formula />} />
+          <Route path='home' element={<Formula />} />
           <Route path='chat' element={<MyChat />} />
         </Route>
       </Routes>

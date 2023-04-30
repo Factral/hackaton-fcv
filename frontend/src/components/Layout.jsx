@@ -5,9 +5,9 @@ import useGetUser from '../hooks/useGetUser'
 import Loading from './Loading'
 
 export default function Layout () {
-  const { loading } = useGetUser()
+  // const { loading } = useGetUser()
 
-  if (loading) return <Loading />
+  // if (loading) return <Loading />
 
   return (
     <>
