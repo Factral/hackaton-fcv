@@ -13,6 +13,7 @@ export default function Formula () {
   const [treatments, setTreatments] = useState([])
 
   useEffect(() => {
+    console.log({ user })
     getTreatments(user.cookie)
       .then((data) => {
         console.log(data)

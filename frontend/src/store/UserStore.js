@@ -6,7 +6,8 @@ const userInitial = {
   gender: null,
   phone: null,
   role: null,
-  birthdate: null
+  birthdate: null,
+  cookie: null
 }
 
 const userRebember = () => {
