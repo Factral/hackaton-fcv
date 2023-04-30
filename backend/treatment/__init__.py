@@ -14,3 +14,4 @@ def treatment_medicines(id):
         medicine['_id'] = str(medicine['_id'])
         medicines_list.append(medicine)
     return jsonify(medicines_list), 200 
+
