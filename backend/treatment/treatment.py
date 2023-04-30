@@ -22,7 +22,13 @@ def treatment_set():
 @login_required
 def treatment_get():
     user = current_user
-    treatments = db_person.find_one({'_id': ObjectId(user.username)})['treatments']
+    person = db_person.find_one({'_id': ObjectId(user.username)})
+
+    if 'treatments' not in person:
+        return jsonify([]), 200
+
+    treatments = person['treatments']
+
     treatments_list = []
     for treatment in treatments:
         treatment_ = db_treatment.find_one({'_id': ObjectId(treatment)})
