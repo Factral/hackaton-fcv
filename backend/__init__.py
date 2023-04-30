@@ -28,8 +28,14 @@ def create_app():
     app.config['MAIL_USE_SSL'] = False
     app.debug = True
     app.config['SECRET_KEY'] = '9OLWxND4o83j4K4iuopO'
+    app.config['SESSION_COOKIE_DOMAIN'] = 'http://127.0.0.1:5000'
     CORS(app)
     Mail(app)
+
+    @app.after_request
+    def after_request(response):
+        response.headers.add('Access-Control-Allow-Origin', 'true')
+        return response
 
 
     login_manager = LoginManager()
@@ -64,5 +70,8 @@ def create_app():
 
     from .treatment.treatment import treatment as treatment_blueprint
     app.register_blueprint(treatment_blueprint)
+
+    from .activities.activities import activities as activities_blueprint
+    app.register_blueprint(activities_blueprint)
 
     return app

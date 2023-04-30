@@ -67,10 +67,9 @@ def treatment_get():
             medicines_.append({
                 "name": medicine_['name'],
                 "quantity": medicine_['quantity'],
-                "start_hour": medicine_['start_hour'],
+                "start_date": medicine_['start_date'],
                 "frequency": medicine_['frequency'],
                 "start_amount": medicine_['start_amount'],
-                "amount": medicine_['amount'],
                 "status": medicine_['status']
             })
 

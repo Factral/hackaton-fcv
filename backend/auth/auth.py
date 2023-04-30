@@ -1,6 +1,6 @@
 # auth.py
 
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, session
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_user, logout_user, login_required, current_user
 from .. import db_person
@@ -37,6 +37,8 @@ def login_post():
         'gender': user.gender,
         'document': user.document
     }
+
+    print(session['_id'])
 
     return jsonify({'message': 'Has iniciado sesión', 'user':user_dict}), 200
 
