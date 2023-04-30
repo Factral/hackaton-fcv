@@ -11,11 +11,9 @@ import MyChat from './pages/MyChat'
 import VerifyUserLogued from './security/VerifyUserLogued'
 import useCloseAlert from './hooks/useCloseAlert'
 import Listchat from './pages/Listchat'
-import UserStore from './store/UserStore'
 
 function App () {
   useCloseAlert()
-  const { user } = UserStore()
   return (
     <>
       <Routes>
