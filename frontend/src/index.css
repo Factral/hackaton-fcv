@@ -3,17 +3,6 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --white-100: #E9F8F1;
-  --white-200: #C2E9D8;
-  --green-gradient-100: #74F484;
-  --green-gradient-200: #0FC141;
-  --green-main-100: #30C243;
-}
-
 *, *::before, *::after {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
   font-family: 'Dosis', sans-serif;
 }

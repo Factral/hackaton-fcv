@@ -1,54 +1,136 @@
 # auth.py
 
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, session, current_app
+from flask_login.utils import encode_cookie, decode_cookie
+from flask_login import user_loaded_from_cookie
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_login import login_user, logout_user, login_required
-from .. import db
-from ..user import User
+from flask_login import login_user, logout_user, login_required, current_user
+from .. import db_person, login_manager
+from ..models.user import User
+from bson.objectid import ObjectId
 
 auth = Blueprint('auth', __name__)
 #login
 
 @auth.route('/login', methods=['POST'])
 def login_post():
+    
     email = request.json['email']
     password = request.json['password']
+    
     remember = True if request.json['remember'] else False
 
-    user = db.find_one({'email': email})
+    user = db_person.find_one({'email': email})
 
     if not user or not User.validate_login(user['password'], password):
-        return jsonify({'message': 'Por favor revisa tus credenciales'}), 400
+        return jsonify({'message': 'Por favor revisa tus credenciales', "error" : True}), 400
     
-    user_obj = User(str(user["_id"]), user["email"], user["name"])
+    user_obj = User(str(user["_id"]), user["email"], user["name"], user['phone'],user["birthdate"],user["role"],user["gender"], user["document"])
 
     login_user(user_obj, remember=remember)
+    
+    user = current_user
+    user_dict = {
+        'id': user.username,
+        'name': user.name,
+        'email': user.email,
+        'phone': user.phone,
+        'birthdate': user.birthdate,
+        'role': user.role,
+        'gender': user.gender,
+        'document': user.document,
+        'cookie': encode_cookie(str(session["_user_id"]))
+    }
 
-    return jsonify({'message': 'Logged in'})
+    person = db_person.find_one({'_id': ObjectId(user.username)})
+
+    if person['role'] == 'carer':
+        if "patients" not in person:
+            user_dict['patients'] = []
+        else:
+            user_dict['patients'] = []
+            if isinstance(person['patients'], list):
+      
+                for patient in person['patients']:
+                    patient_ = db_person.find_one({'_id': ObjectId(patient)})
+                    user_dict['patients'].append({
+                        'id': str(patient_['_id']),
+                        'name': patient_['name'],
+                    })
+            else:
+                patient_ = db_person.find_one({'_id': ObjectId(person['patients'])})
+                user_dict['patients'].append({
+                    'id': str(patient_['_id']),
+                    'name': patient_['name'],
+                })
+    elif person['role'] == 'patient':
+        if "carer" not in person:
+            user_dict['carer'] = []
+        else:
+            user_dict['carer'] = []
+            if isinstance(person['carer'], list):
+                for carer in person['carer']:
+                    carer_ = db_person.find_one({'_id': ObjectId(carer)})
+                    user_dict['carer'].append({
+                        'id': str(carer_['_id']),
+                        'name': carer_['name'],
+                    })
+            else:
+                carer_ = db_person.find_one({'_id': ObjectId(person['carer'])})
+                user_dict['carer'].append({
+                    'id': str(carer_['_id']),
+                    'name': carer_['name'],
+                })
+
+
+    print(encode_cookie(str(session["_user_id"])))
+    #print(a)
+    b = decode_cookie(encode_cookie(str(session["_user_id"])))
+    print(b,"a")
+    user = login_manager._user_callback(b)
+    print(user,"b")
+    print(user.name)
+    app = current_app._get_current_object()
+    print(app)
+
+    #response
+
+    return jsonify({'message': 'Has iniciado sesión', 'user':user_dict}), 200
 
 # signup
 
-@auth.route('/signup', methods=['POST'])
+@auth.route('/register', methods=['POST'])
 def signup_post():
 
     name = request.json['name']
     email = request.json['email']
     password = request.json['password']
-
+    phone = request.json['phone']
+    birthdate = request.json['birthdate']
+    role =  request.json['role']
+    gender = request.json['gender']
+    document = request.json['document']
     # check if user already exists
-    user = db.find_one({'email': email})
+    user = db_person.find_one({'email': email})
+    
 
     if user: 
-        return jsonify({'message': 'User already exists'})
+        return jsonify({'message': 'User already exists' , 'error': True}), 400
+    
 
     # regiter user in mongodb
     new_user = {
         'email': email,
         'name': name,
-        'password': generate_password_hash(password, method='sha256')
+        'password': generate_password_hash(password, method='sha256'),
+        'phone': phone,
+        'birthdate': birthdate,
+        'role': role,
+        'gender': gender,
+        'document': document
     }
 
-    db.insert_one(new_user)
+    person = db_person.insert_one(new_user)    
 
     return jsonify({'message': 'El usuario ha sido creado'}), 201
 
