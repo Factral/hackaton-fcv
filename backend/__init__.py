@@ -16,6 +16,7 @@ db_treatment = db.Treatment
 db_appointment = db.Appointment
 db_nutrition = db.Nutrition
 
+login_manager = LoginManager()
 
 
 def create_app():
@@ -28,17 +29,12 @@ def create_app():
     app.config['MAIL_USE_SSL'] = False
     app.debug = True
     app.config['SECRET_KEY'] = '9OLWxND4o83j4K4iuopO'
-    app.config['SESSION_COOKIE_DOMAIN'] = 'http://127.0.0.1:5000'
+    #app.config['SESSION_COOKIE_DOMAIN'] = 'http://127.0.0.1:5000'
     CORS(app)
     Mail(app)
 
-    @app.after_request
-    def after_request(response):
-        response.headers.add('Access-Control-Allow-Origin', 'true')
-        return response
 
 
-    login_manager = LoginManager()
     login_manager.init_app(app)
 
     @login_manager.unauthorized_handler
@@ -73,5 +69,11 @@ def create_app():
 
     from .activities.activities import activities as activities_blueprint
     app.register_blueprint(activities_blueprint)
+
+    @app.after_request
+    def middleware_for_response(response):
+        # Allowing the credentials in the response.
+        response.headers.add('Access-Control-Allow-Credentials', 'true')
+        return response
 
     return app

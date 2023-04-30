@@ -4,7 +4,8 @@ export default function fetchLogin (data) {
   return fetch(`${config.URL_API}/login`, {
     method: 'POST',
     headers: {
-      'Content-type': 'application/json'
+      'Content-type': 'application/json',
+      'withCredentials': true
     },
     body: JSON.stringify(data)
   })
