@@ -44,12 +44,7 @@ def appointment_post():
     minute = time_final.minute
     second = time_final.second
     user = current_user
-    
-    query = {"patients": {"$in": [ObjectId(user.username)]}}
-    carer = db_person.find_one(query)
-    
-    print(carer) 
-    
+
     
     message = "Tienes una cita médica de "+name+" programada para el día " + date + " a las " + time + " con el profesional " + professional + " en la dirección " + address + "."
     mail = Mail()
@@ -64,9 +59,6 @@ def appointment_post():
     def send_whatsapp(message,phone):
         from datetime import datetime
         import pywhatkit as pwk
-        
-        print(phone)
-        
         current_time = datetime.now()
         current_hour = current_time.hour
         current_minute = current_time.minute + 1
