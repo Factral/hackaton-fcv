@@ -1,5 +1,5 @@
 # init.py
-from flask import Flask
+from flask import Flask,  jsonify
 from flask_mail import Mail
 from flask_login import LoginManager 
 import pymongo
@@ -35,10 +35,16 @@ def create_app():
     login_manager = LoginManager()
     login_manager.init_app(app)
 
+    @login_manager.unauthorized_handler
+    def unauth_handler():
+        return jsonify(message='Authorize please to access this page', error=401), 401
+
 
     @login_manager.user_loader
     def load_user(user_id):
         user = db_person.find_one({'_id': ObjectId(user_id)})
+        if user is None:
+            return None
         return User(str(user["_id"]), user["email"], user["name"], user["phone"], user["birthdate"], user['role'], user["gender"], user["document"])
 
     from .auth.auth import auth as auth_blueprint

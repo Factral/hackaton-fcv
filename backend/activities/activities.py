@@ -14,7 +14,17 @@ def activities_get():
     day = request.json['day'] # AAAA-MM-DD
     user = current_user
 
-    if 'patient' not in user.role:
-        return jsonify({'message': 'No tienes permisos para realizar esta acción', 'error': True}), 400
-    
     # retrieve activites from treatment, nutrition, and medicine and check the day
+    if user.role == 'carer':
+        patient = request.json['patient']
+        treatment_patient = db_person.find_one({'_id': ObjectId(patient)})['treatment']
+    
+        # list medicines for the day
+        medicines = db_medicine.find({'treatment_id': ObjectId(treatment_patient)})
+        medicines_list = []
+        for medicine in medicines:
+            if medicine['start_how'] == 'day':
+                medicines_list.append(medicine)
+
+
+    
