@@ -1,6 +1,10 @@
+import { ROLE_CARRER } from '../constants/magicStrings'
+import UserStore from '../store/UserStore'
+import { shallow } from 'zustand/shallow'
 
 export default function ListOfTratamients ({ treatments }) {
-  if (treatments.length === 0) return <p className='text-center text-2xl'>No hay tratamientos</p>
+  const { user } = UserStore(state => state, shallow)
+  if (user.role === ROLE_CARRER || treatments.length === 0) return <p className='text-center text-2xl'>No hay tratamientos</p>
 
   return treatments.map((treatment) => {
     console.log({ treatment })
