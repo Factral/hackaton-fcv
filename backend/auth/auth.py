@@ -1,9 +1,11 @@
 # auth.py
 
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, session, current_app
+from flask_login.utils import encode_cookie, decode_cookie
+from flask_login import user_loaded_from_cookie
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_user, logout_user, login_required, current_user
-from .. import db_person
+from .. import db_person, login_manager
 from ..models.user import User
 from bson.objectid import ObjectId
 
@@ -36,8 +38,22 @@ def login_post():
         'birthdate': user.birthdate,
         'role': user.role,
         'gender': user.gender,
-        'document': user.document
+        'document': user.document,
+        'cookie': encode_cookie(str(session["_user_id"]))
     }
+
+
+    print(encode_cookie(str(session["_user_id"])))
+    #print(a)
+    b = decode_cookie(encode_cookie(str(session["_user_id"])))
+    print(b,"a")
+    user = login_manager._user_callback(b)
+    print(user,"b")
+    print(user.name)
+    app = current_app._get_current_object()
+    print(app)
+
+    #response
 
     return jsonify({'message': 'Has iniciado sesión', 'user':user_dict}), 200
 

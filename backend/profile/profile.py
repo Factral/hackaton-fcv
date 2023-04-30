@@ -1,6 +1,7 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, current_app
 from flask_login import login_required, current_user
-from .. import db_person
+from flask_login.utils import encode_cookie, decode_cookie
+from .. import db_person, login_manager
 from bson.objectid import ObjectId
 from werkzeug.security import generate_password_hash
 from ..models.user import User
@@ -8,10 +9,15 @@ from ..models.user import User
 profile = Blueprint('profile', __name__)
 
 
-@profile.route('/profile')
-@login_required
+@profile.route('/profile', methods=['POST'])
+#@login_required
 def profile_():
-    user = current_user
+    if 'session' not in request.json:
+        return jsonify({'message': 'No hay session', 'error': True}), 400
+    session = request.json['session']
+    b = decode_cookie(str(session))
+    user = login_manager._user_callback(b)
+
     user_dict = {
         'id': user.username,
         'email': user.email,
@@ -27,6 +33,13 @@ def profile_():
 @profile.route('/profile/edit', methods=['PUT'])
 @login_required
 def profile_edit():
+
+    if 'session' not in request.json:
+        return jsonify({'message': 'No hay session', 'error': True}), 400
+    session = request.json['session']
+    b = decode_cookie(str(session))
+    user = login_manager._user_callback(b)
+
     name = request.json['name']
     phone = request.json['phone']
     email = request.json['email']
@@ -34,7 +47,6 @@ def profile_edit():
     role = request.json['role']
     gender = request.json['gender']
     document = request.json['document']
-    user = current_user
     
     if user.email != email:
         exist_email = db_person.find_one({'email': email})

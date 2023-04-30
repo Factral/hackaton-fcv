@@ -49,8 +49,7 @@ def treatment_get():
 
     treatments_list = []
     for treatment in treatments:
-        treatment_ = db_treatment.find_one({'_id': ObjectId(treatment)})
-
+        treatment_ = db_treatment.find_one({'_id': ObjectId(str(treatment))})
         if isinstance(treatment_['medicines'], list):
             medicines = [str(medicine) for medicine in treatment_['medicines']]
         else:
@@ -68,10 +67,9 @@ def treatment_get():
             medicines_.append({
                 "name": medicine_['name'],
                 "quantity": medicine_['quantity'],
-                "start_hour": medicine_['start_hour'],
+                "start_date": medicine_['start_date'],
                 "frequency": medicine_['frequency'],
                 "start_amount": medicine_['start_amount'],
-                "amount": medicine_['amount'],
                 "status": medicine_['status']
             })
 
