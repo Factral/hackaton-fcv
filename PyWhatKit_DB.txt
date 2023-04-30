@@ -58,3 +58,13 @@ Time: 5:15
 Phone Number: +57 3133985089
 Message: En 30 minutos tienes una cita médica programada en la dirección lorem ipsum.
 --------------------
+Date: 30/4/2023
+Time: 5:33
+Phone Number: +57 3133985089
+Message: Tienes una cita médica de Medicina General2 programada para el día 2023-04-30 a las 06:07:00 con el profesional lorem en la dirección lorem ipsum.
+--------------------
+Date: 30/4/2023
+Time: 5:37
+Phone Number: +57 3133985089
+Message: En 30 minutos tienes una cita médica de Medicina General2 programada en la dirección lorem ipsum.
+--------------------

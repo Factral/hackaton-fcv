@@ -45,7 +45,13 @@ def appointment_post():
     second = time_final.second
     user = current_user
     
-    message = "Tienes una cita médica programada para el día " + date + " a las " + time + " con el profesional " + professional + " en la dirección " + address + "."
+    query = {"patients": {"$in": [ObjectId(user.username)]}}
+    carer = db_person.find_one(query)
+    
+    print(carer) 
+    
+    
+    message = "Tienes una cita médica de "+name+" programada para el día " + date + " a las " + time + " con el profesional " + professional + " en la dirección " + address + "."
     mail = Mail()
     msg = Message('Cita médica',
                         sender="noreply@gmail.com",
@@ -88,7 +94,7 @@ def appointment_post():
         app.config['MAIL_USE_SSL'] = False
         mailer = Mail(app)
         
-        msg = "En 30 minutos tienes una cita médica programada en la dirección " + address + "."
+        msg = "En 30 minutos tienes una cita médica de "+ name +" programada en la dirección " + address + "."
         message = Message('Cita médica',
                         sender="noreply@gmail.com",
                         recipients=[email],
