@@ -32,27 +32,35 @@ export default function useUser () {
     const response = await fetchLogin(data)
     const { rebember } = data
     const message = response.message
+    console.log({ message })
     if (response.error) {
       setLoading(false)
       errorAlert(message)
       return
     }
 
-    const newUser = await fetchGetUser()
-    const newMessage = newUser.message
+    if (rebember) localStorage.setItem('user', JSON.stringify(message))
+    setUser({ role: message })
+    setLoading(false)
+    navigate('/')
+  }
 
-    if (newUser.error) {
+  const getUser = async () => {
+    const userLocal = localStorage.getItem('user')
+    setLoading(true)
+  
+    const response = await fetchGetUser()
+    const message = response.message
+    console.log({ message })
+    if (response.error) {
       setLoading(false)
-      errorAlert(newMessage)
+      errorAlert(message)
       return
     }
 
-    if (rebember) localStorage.setItem('user', JSON.stringify(newUser))
-
-    setUser(newUser)
+    if (userLocal) localStorage.setItem('user', JSON.stringify(message))
     setLoading(false)
-    successAlert(newMessage)
-    navigate('/')
+    setUser(message)
   }
 
   const logOut = async () => {
@@ -74,6 +82,7 @@ export default function useUser () {
     logIn,
     logOut,
     loading,
-    signUp
+    signUp,
+    getUser
   }
 }
