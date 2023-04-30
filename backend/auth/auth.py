@@ -42,6 +42,19 @@ def login_post():
         'cookie': encode_cookie(str(session["_user_id"]))
     }
 
+    person = db_person.find_one({'_id': ObjectId(user.username)})
+
+    if person['role'] == 'carer':
+        if "patients" not in person:
+            user_dict['patients'] = []
+        else:
+            user_dict['patients'] = person['patients']
+    elif person['role'] == 'patient':
+        if "carer" not in person:
+            user_dict['carer'] = []
+        else:
+            user_dict['carer'] = [person['carer']]
+
 
     print(encode_cookie(str(session["_user_id"])))
     #print(a)
