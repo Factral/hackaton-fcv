@@ -103,3 +103,30 @@ def treatment_get():
         
 
     return jsonify(treatments_list), 200
+
+#create new treatment
+@treatment.route('/treatment', methods=['POST'])
+#@login_required
+def treatment_post():
+    if 'session' not in request.json:
+        return jsonify({'message': 'No hay session', 'error': True}), 400
+    session = request.json['session']
+    b = decode_cookie(str(session))
+    user = login_manager._user_callback(b)
+
+    person = user.username
+
+    name = request.json['name']
+    medicines = request.json['medicines']
+    nutrition = request.json['nutrition']
+
+    treatment = {
+        "name": name,
+        "medicines": medicines,
+        "nutrition": nutrition
+    }
+
+    db_treatment.insert_one(treatment)
+    db_person.update_one({'_id': ObjectId(person)}, {'$push': {'treatments': str(treatment['_id'])}})
+
+    return jsonify({'message': 'Tratamiento agregado'}), 200

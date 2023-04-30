@@ -28,6 +28,10 @@ def profile_():
         'gender': user.gender,
         'document': user.document
     }
+
+    if user.role == 'carer':
+        user_dict['patients'] = user.patients
+
     return jsonify({'message': user_dict}), 200
 
 @profile.route('/profile/edit', methods=['PUT'])
@@ -136,7 +140,7 @@ def set_patient():
     session = request.json['session']
     b = decode_cookie(str(session))
     current_user = login_manager._user_callback(b)
-
+    print(current_user.role)
     if 'carer' not in current_user.role:
         return jsonify({'message': 'No tienes permisos para realizar esta acción', 'error': True}), 400
     
