@@ -42,15 +42,17 @@ io.on('connection', (socket) => {
 
   socket.on('mensaje', async (data) => {
     // Creo el mensaje en la db
+    console.log('llego el mensaje')
     try {
       const mensaje = new Mensaje(data)
       socket.emit('mensaje', mensaje._id)
       const mensajeGuardado = await mensaje.save()
       // Busco la conversacion en la db
       const conversation = await Conversation.findOne({
-        usuario: data.userId,
-        destinatario: data.destinatario,
-      });
+        $or: [
+          { usuario: data.userId, destinatario: data.destinatario },
+          { usuario: data.destinatario, destinatario: data.userId },
+        ]});
 
       if(conversation == null) {
         // si no existe la conversacion, la creo
@@ -75,10 +77,12 @@ io.on('connection', (socket) => {
   socket.on('obtener_conversacion', async (data) => {
     try {
       const conversation = await Conversation.findOne({
-        usuario: data.userId,
-        destinatario: data.destinatario,
-      }).populate('mensajes')
+          $or: [
+            { usuario: data.userId, destinatario: data.destinatario },
+            { usuario: data.destinatario, destinatario: data.userId },
+          ]}).populate('mensajes')
       socket.emit("obtener_conversacion", conversation);
+      console.log('llego la conversacion')
     } catch (error) {
       console.log(error)
     }

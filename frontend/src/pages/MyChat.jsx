@@ -8,7 +8,7 @@ import { LoadingComponent } from '../components/Loading'
 import UserStore from '../store/UserStore'
 import { shallow } from 'zustand/shallow'
 
-const sockect = io('http://localhost:3000/')
+const sockect = io('http://localhost:3000')
 
 function getDate () {
   return new Date().toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long' })
@@ -21,7 +21,6 @@ export default function MyChat () {
   const [mensaje, setMensaje] = useState('')
   const [mensajes, setMensajes] = useState([])
   const { user } = UserStore(state => state, shallow)
-console.log({user})
   useEffect(() => {
     sockect.on('connect', () => {
       setIsConnected(true)
@@ -32,7 +31,7 @@ console.log({user})
       setMensajes(conversacion.mensajes)
     })
 
-    sockect.emit('obtener_conversacion', { userId: user.id, destinatario: 'Aca va el id del destinatario' })
+    sockect.emit('obtener_conversacion', { userId: user.id, destinatario: '644e0792f269e1d3add9c304' })
 
     return () => {
       sockect.off('connect')
@@ -53,13 +52,13 @@ console.log({user})
     const mensajeEnviar = {
       userName: user.name,
       userId: user.id,
-      destinatario: 'Aca va el id del destinatario',
+      destinatario: '644e0792f269e1d3add9c304',
       mensaje,
       fecha: getDate(),
       hora: transformHours()
     }
     sockect.emit('mensaje', mensajeEnviar)
-    sockect.emit('obtener_conversacion', { userId: user.id, destinatario: 'Aca va el id del destinatario' })
+    sockect.emit('obtener_conversacion', { userId: user.id, destinatario: '644e0792f269e1d3add9c304' })
     setLast(mensajeEnviar)
     setMensaje('')
   }
